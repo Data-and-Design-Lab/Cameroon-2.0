@@ -1,5 +1,5 @@
 {
-  "created": "2026-07-28T19:03:37",
+  "created": "2026-09-05T15:44:20",
   "model": "IsolationForest",
   "target": "ClaimStatus == 1 (claim REJECTION, not fraud)",
   "hyperparameters": {
@@ -103,8 +103,8 @@
     "max_feature_label_corr": 0.3530384111406447
   },
   "config": {
-    "DATA_DIR": "data",
-    "MODEL_DIR": "model_iforest",
+    "DATA_DIR": "../data",
+    "MODEL_DIR": "../model_iforest",
     "ACCEPTED_STATUSES": [
       16,
       32

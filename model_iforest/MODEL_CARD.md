@@ -1,6 +1,6 @@
 # Model Card — Claim Rejection Isolation Forest
 
-**Created:** 2026-07-28T19:03:37
+**Created:** 2026-09-05T15:44:20
 
 ## What this model does
 Scores health insurance claims by Isolation Forest path length. **The target is claim
