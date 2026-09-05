@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  claim-fraud-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openimis-claim-fraud-service
+    ports:
+      - "8000:8000"
+    environment:
+      - FRAUD_API_MODEL_DIR=/app/model_lightgbm_no_leakage
+      - FRAUD_API_DECISION_THRESHOLD=0.8751227354619026
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
