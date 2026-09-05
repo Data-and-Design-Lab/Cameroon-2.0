@@ -1,0 +1,140 @@
+{
+  "created": "2026-07-28T19:14:35",
+  "model": "ECOD",
+  "target": "ClaimStatus == 1 (claim REJECTION, not fraud)",
+  "settings": {
+    "variant": "ecod",
+    "aggregation": "skew",
+    "reference_rows": "accepted only",
+    "n_reference": 1667620,
+    "hyperparameters": "none"
+  },
+  "deterministic": true,
+  "ecod_vs_copod_spearman": 0.9999999999999999,
+  "threshold": 45.483717361738435,
+  "threshold_mode": "capacity",
+  "score_convention": "sum of -log tail probability; higher = more anomalous",
+  "feature_names": [
+    "NUM_ClaimServiceGap",
+    "NUM_ClaimServiceGap__imputed",
+    "NUM_Claimed",
+    "NUM_Claimed__imputed",
+    "NUM_CostPerDay",
+    "NUM_CostPerDay__imputed",
+    "NUM_CostPerService",
+    "NUM_CostPerService__imputed",
+    "NUM_LengthOfStay",
+    "NUM_ServiceCount",
+    "NUM_ServiceCount__imputed",
+    "NUM_ServiceMaxPrice",
+    "NUM_ServiceMaxPrice__imputed",
+    "NUM_ServiceTotalAsked",
+    "NUM_ServiceTotalAsked__imputed",
+    "NUM_SubmissionDelay",
+    "FLAG_backdated",
+    "FLAG_los_over_year",
+    "FLAG_neg_claimed",
+    "FLAG_negative_los",
+    "FLAG_no_service_lines",
+    "ISNA_Claimed",
+    "CareType=IPD",
+    "CareType=OPD",
+    "CareType=__UNSEEN__",
+    "VisitType= ",
+    "VisitType=E",
+    "VisitType=O",
+    "VisitType=R",
+    "HFLevel=C",
+    "HFLevel=D",
+    "HFLevel=H",
+    "HFCareType=B",
+    "HFCareType=O",
+    "LegalForm=C",
+    "LegalForm=D",
+    "LegalForm=G",
+    "LegalForm=P",
+    "Hfid__log_freq",
+    "Hfid__risk",
+    "Icdid__log_freq",
+    "Icdid__risk"
+  ],
+  "split": {
+    "mode": "temporal",
+    "train_n": 1949796,
+    "val_n": 417814,
+    "test_n": 417814
+  },
+  "base_rates": {
+    "population": 0.15815617299197537,
+    "validation": 0.20401422642611305,
+    "test": 0.174996529556214
+  },
+  "metrics_test": {
+    "roc_auc": 0.7425943805308984,
+    "pr_auc": 0.5238325425005941,
+    "precision": 0.9041695146958305,
+    "recall": 0.18091799332567426,
+    "f1": 0.30150662138445056,
+    "alert_rate": 0.035015581095894345,
+    "roc_auc_ci95": [
+      0.6735953432915984,
+      0.8001632030934863
+    ],
+    "pr_auc_ci95": [
+      0.32880375776333687,
+      0.6623634450924005
+    ]
+  },
+  "baselines": {
+    "ECOD (agg=skew)": 0.5238325425005941,
+    "single feature: Hfid__risk": 0.42562252890432944,
+    "Isolation Forest": 0.41930575679315146,
+    "PCA reconstruction": 0.3941170248951189,
+    "random": 0.17470435060537468
+  },
+  "leakage_controls": {
+    "post_adjudication_features_used": false,
+    "encoders_fitted_on": "train window only",
+    "max_feature_label_corr": 0.3530384111406447
+  },
+  "config": {
+    "DATA_DIR": "data",
+    "MODEL_DIR": "model_ecod",
+    "ACCEPTED_STATUSES": [
+      16,
+      32
+    ],
+    "REJECTED_STATUSES": [
+      1
+    ],
+    "USE_POST_ADJUDICATION_FEATURES": false,
+    "MONEY_HAS_DECIMALS": false,
+    "MAX_MONEY_UNPARSEABLE_RATE": 0.01,
+    "MAX_DATE_NAT_RATE": 0.05,
+    "SPLIT_MODE": "temporal",
+    "SPLIT_DATE_COL": "DateClaimed",
+    "TRAIN_FRAC": 0.7,
+    "VAL_FRAC": 0.15,
+    "REFERENCE_ROWS": null,
+    "REF_SAMPLE_CAP": 2000000,
+    "REF_SAMPLE_SWEEP": [
+      10000,
+      50000,
+      200000,
+      1000000
+    ],
+    "AGGREGATION": null,
+    "SCORE_CHUNK": 1000000,
+    "SEED": 42,
+    "THRESHOLD_MODE": "capacity",
+    "AUDIT_CAPACITY_PER_DAY": 500,
+    "F_BETA": 0.5,
+    "COST_FN": 15000.0,
+    "COST_FP": 2000.0,
+    "LEAKAGE_CORR_LIMIT": 0.9,
+    "MIN_FACILITY_CLAIMS": 100,
+    "SAMPLE_FRAC": 1.0,
+    "CHUNK_SIZE": 2000000,
+    "EXPECTED_CLAIM_ROWS": 14242741
+  }
+}

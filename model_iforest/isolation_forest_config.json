@@ -1,0 +1,163 @@
+{
+  "created": "2026-07-28T19:03:37",
+  "model": "IsolationForest",
+  "target": "ClaimStatus == 1 (claim REJECTION, not fraud)",
+  "hyperparameters": {
+    "n_estimators": 400,
+    "max_samples": 512,
+    "max_features": 1.0,
+    "trained_on": "accepted only",
+    "log_transform": true
+  },
+  "threshold": 0.6440807810412639,
+  "threshold_mode": "capacity",
+  "score_convention": "-score_samples(X); higher = more anomalous",
+  "feature_names": [
+    "NUM_ClaimServiceGap",
+    "NUM_ClaimServiceGap__imputed",
+    "NUM_Claimed",
+    "NUM_Claimed__imputed",
+    "NUM_CostPerDay",
+    "NUM_CostPerDay__imputed",
+    "NUM_CostPerService",
+    "NUM_CostPerService__imputed",
+    "NUM_LengthOfStay",
+    "NUM_ServiceCount",
+    "NUM_ServiceCount__imputed",
+    "NUM_ServiceMaxPrice",
+    "NUM_ServiceMaxPrice__imputed",
+    "NUM_ServiceTotalAsked",
+    "NUM_ServiceTotalAsked__imputed",
+    "NUM_SubmissionDelay",
+    "FLAG_backdated",
+    "FLAG_los_over_year",
+    "FLAG_neg_claimed",
+    "FLAG_negative_los",
+    "FLAG_no_service_lines",
+    "ISNA_Claimed",
+    "CareType=IPD",
+    "CareType=OPD",
+    "CareType=__UNSEEN__",
+    "VisitType= ",
+    "VisitType=E",
+    "VisitType=O",
+    "VisitType=R",
+    "HFLevel=C",
+    "HFLevel=D",
+    "HFLevel=H",
+    "HFCareType=B",
+    "HFCareType=O",
+    "LegalForm=C",
+    "LegalForm=D",
+    "LegalForm=G",
+    "LegalForm=P",
+    "Hfid__log_freq",
+    "Hfid__risk",
+    "Icdid__log_freq",
+    "Icdid__risk"
+  ],
+  "split": {
+    "mode": "temporal",
+    "train_n": 1949796,
+    "val_n": 417814,
+    "test_n": 417814
+  },
+  "base_rates": {
+    "population": 0.15815617299197537,
+    "validation": 0.20401422642611305,
+    "test": 0.174996529556214
+  },
+  "metrics_test": {
+    "roc_auc": 0.7234578473030724,
+    "pr_auc": 0.4417312134283439,
+    "precision": 0.5743731406714833,
+    "recall": 0.1478746102084359,
+    "f1": 0.23519686752229713,
+    "alert_rate": 0.045053540570684565,
+    "roc_auc_ci95": [
+      0.6531681112043695,
+      0.7809605262492124
+    ],
+    "pr_auc_ci95": [
+      0.2712532557542053,
+      0.5857045505800044
+    ]
+  },
+  "seed_variance": {
+    "test_auc_mean": 0.7219462546571366,
+    "test_auc_std": 0.0012216819560555419,
+    "test_ap_mean": 0.4326431288685667,
+    "test_ap_std": 0.011858850790506133,
+    "n_seeds": 5
+  },
+  "baselines": {
+    "ECOD-style": 0.4784033460919249,
+    "Isolation Forest (ms=512)": 0.4417312134283439,
+    "single feature: Hfid__risk": 0.42562252890432944,
+    "PCA reconstruction": 0.3941170248951189,
+    "random": 0.17470435060537468
+  },
+  "leakage_controls": {
+    "post_adjudication_features_used": false,
+    "encoders_fitted_on": "train window only",
+    "max_feature_label_corr": 0.3530384111406447
+  },
+  "config": {
+    "DATA_DIR": "data",
+    "MODEL_DIR": "model_iforest",
+    "ACCEPTED_STATUSES": [
+      16,
+      32
+    ],
+    "REJECTED_STATUSES": [
+      1
+    ],
+    "USE_POST_ADJUDICATION_FEATURES": false,
+    "MONEY_HAS_DECIMALS": false,
+    "MAX_MONEY_UNPARSEABLE_RATE": 0.01,
+    "MAX_DATE_NAT_RATE": 0.05,
+    "SPLIT_MODE": "temporal",
+    "SPLIT_DATE_COL": "DateClaimed",
+    "TRAIN_FRAC": 0.7,
+    "VAL_FRAC": 0.15,
+    "IF_N_ESTIMATORS": 200,
+    "IF_MAX_SAMPLES": 256,
+    "IF_MAX_FEATURES": 1.0,
+    "IF_SWEEP_MAX_SAMPLES": [
+      64,
+      128,
+      256,
+      512,
+      1024,
+      4096
+    ],
+    "IF_SWEEP_N_ESTIMATORS": [
+      50,
+      100,
+      200,
+      400
+    ],
+    "IF_SWEEP_MAX_FEATURES": [
+      0.5,
+      0.75,
+      1.0
+    ],
+    "IF_TRAIN_ON": null,
+    "FIT_SUBSAMPLE": 2000000,
+    "USE_LOG_TRANSFORM": null,
+    "N_SEEDS": 5,
+    "SEED": 42,
+    "THRESHOLD_MODE": "capacity",
+    "AUDIT_CAPACITY_PER_DAY": 500,
+    "F_BETA": 0.5,
+    "COST_FN": 15000.0,
+    "COST_FP": 2000.0,
+    "LEAKAGE_CORR_LIMIT": 0.9,
+    "MIN_FACILITY_CLAIMS": 100,
+    "SHAP_SAMPLE": 5000,
+    "SAMPLE_FRAC": 1.0,
+    "CHUNK_SIZE": 2000000,
+    "EXPECTED_CLAIM_ROWS": 14242741,
+    "N_JOBS": -1
+  }
+}

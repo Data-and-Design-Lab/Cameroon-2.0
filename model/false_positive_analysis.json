@@ -1,0 +1,18 @@
+{
+    "total_false_positives_sample": 189653,
+    "fp_rate_among_accepted": 0.3898106164932604,
+    "fp_mean_claimed": 238.6033387291527,
+    "tn_mean_claimed": 128.80352878166758,
+    "claimed_amount_ratio": 1.8524596413317582,
+    "fp_mean_service_count": 1.0,
+    "tn_mean_service_count": 1.0,
+    "fp_mean_submission_delay": 59.38778716919848,
+    "tn_mean_submission_delay": 76.06478191010972,
+    "top_fp_facilities": {
+        "85": 14033,
+        "380": 13306,
+        "391": 4519,
+        "679": 4425,
+        "584": 4288
+    }
+}

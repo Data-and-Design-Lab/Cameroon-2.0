@@ -1,0 +1,158 @@
+{
+  "created": "2026-07-28T18:05:38",
+  "target": "ClaimStatus == 1 (claim REJECTION, not fraud)",
+  "architecture": {
+    "input_dim": 42,
+    "latent_dim": 8,
+    "hidden": [
+      32,
+      16
+    ],
+    "batchnorm": false,
+    "denoise_sigma": 0.1
+  },
+  "score_mode": "mean_mse",
+  "threshold": 0.34815993905067444,
+  "threshold_mode": "capacity",
+  "feature_names": [
+    "NUM_ClaimServiceGap",
+    "NUM_ClaimServiceGap__imputed",
+    "NUM_Claimed",
+    "NUM_Claimed__imputed",
+    "NUM_CostPerDay",
+    "NUM_CostPerDay__imputed",
+    "NUM_CostPerService",
+    "NUM_CostPerService__imputed",
+    "NUM_LengthOfStay",
+    "NUM_ServiceCount",
+    "NUM_ServiceCount__imputed",
+    "NUM_ServiceMaxPrice",
+    "NUM_ServiceMaxPrice__imputed",
+    "NUM_ServiceTotalAsked",
+    "NUM_ServiceTotalAsked__imputed",
+    "NUM_SubmissionDelay",
+    "FLAG_backdated",
+    "FLAG_los_over_year",
+    "FLAG_neg_claimed",
+    "FLAG_negative_los",
+    "FLAG_no_service_lines",
+    "ISNA_Claimed",
+    "CareType=IPD",
+    "CareType=OPD",
+    "CareType=__UNSEEN__",
+    "VisitType= ",
+    "VisitType=E",
+    "VisitType=O",
+    "VisitType=R",
+    "HFLevel=C",
+    "HFLevel=D",
+    "HFLevel=H",
+    "HFCareType=B",
+    "HFCareType=O",
+    "LegalForm=C",
+    "LegalForm=D",
+    "LegalForm=G",
+    "LegalForm=P",
+    "Hfid__log_freq",
+    "Hfid__risk",
+    "Icdid__log_freq",
+    "Icdid__risk"
+  ],
+  "split": {
+    "mode": "temporal",
+    "train_n": 1949796,
+    "val_n": 417814,
+    "test_n": 417814
+  },
+  "base_rates": {
+    "population": 0.15815617299197537,
+    "validation": 0.20401422642611305,
+    "test": 0.174996529556214
+  },
+  "metrics_test": {
+    "roc_auc": 0.7407830043633028,
+    "pr_auc": 0.5073672763180346,
+    "precision": 0.9437805540467138,
+    "recall": 0.09505443405000273,
+    "f1": 0.17271371769383698,
+    "alert_rate": 0.017625067613818587,
+    "roc_auc_ci95": [
+      0.6711615299604169,
+      0.8014986916110063
+    ],
+    "pr_auc_ci95": [
+      0.3256147349506776,
+      0.6603162313812586
+    ]
+  },
+  "seed_variance": {
+    "test_auc_mean": 0.736773297183452,
+    "test_auc_std": 0.004464413798517851,
+    "test_ap_mean": 0.4965005804710933,
+    "test_ap_std": 0.0137590806615475,
+    "n_seeds": 3
+  },
+  "baselines": {
+    "autoencoder (latent 8)": 0.5073672763180346,
+    "single feature: Hfid__risk": 0.42562252890432944,
+    "PCA reconstruction": 0.3941170248951189,
+    "random": 0.17470435060537468
+  },
+  "config": {
+    "DATA_DIR": "data",
+    "MODEL_DIR": "model",
+    "ACCEPTED_STATUSES": [
+      16,
+      32
+    ],
+    "REJECTED_STATUSES": [
+      1
+    ],
+    "USE_POST_ADJUDICATION_FEATURES": false,
+    "MONEY_HAS_DECIMALS": false,
+    "MAX_MONEY_UNPARSEABLE_RATE": 0.01,
+    "MAX_DATE_NAT_RATE": 0.05,
+    "SPLIT_MODE": "temporal",
+    "SPLIT_DATE_COL": "DateClaimed",
+    "TRAIN_FRAC": 0.7,
+    "VAL_FRAC": 0.15,
+    "LATENT_SWEEP": [
+      2,
+      3,
+      4,
+      6,
+      8
+    ],
+    "LATENT_DIM": null,
+    "HIDDEN": [
+      32,
+      16
+    ],
+    "USE_BATCHNORM": false,
+    "DROPOUT": 0.0,
+    "DENOISE_SIGMA": 0.1,
+    "BATCH_SIZE": 8192,
+    "MAX_EPOCHS": 60,
+    "PATIENCE": 8,
+    "LR": 0.001,
+    "WEIGHT_DECAY": 0.0001,
+    "N_SEEDS": 3,
+    "SEED": 42,
+    "THRESHOLD_MODE": "capacity",
+    "AUDIT_CAPACITY_PER_DAY": 500,
+    "F_BETA": 0.5,
+    "COST_FN": 15000.0,
+    "COST_FP": 2000.0,
+    "LEAKAGE_CORR_LIMIT": 0.9,
+    "MIN_FACILITY_CLAIMS": 100,
+    "SAMPLE_FRAC": 1,
+    "CHUNK_SIZE": 2000000,
+    "EXPECTED_CLAIM_ROWS": 14242741
+  },
+  "leakage_controls": {
+    "post_adjudication_features_used": false,
+    "encoders_fitted_on": "train window only",
+    "scaler_fitted_on": "accepted training rows only",
+    "max_feature_label_corr": 0.3530384111406447
+  }
+}

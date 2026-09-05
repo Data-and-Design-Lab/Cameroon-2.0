@@ -1,0 +1,95 @@
+[
+    {
+        "claim_id": "3837846",
+        "total_mse": 0.0076850177720189095,
+        "top_contributions": [
+            {
+                "feature": "FE_Icdid_Freq",
+                "sq_error": 0.09180739521980286,
+                "raw_value": 0.46891599893569946
+            },
+            {
+                "feature": "FE_SubmissionDelay",
+                "sq_error": 0.003835516981780529,
+                "raw_value": 7.0
+            },
+            {
+                "feature": "FE_Hfid_Freq",
+                "sq_error": 0.001499779406003654,
+                "raw_value": 0.0015839999541640282
+            },
+            {
+                "feature": "FE_Approved",
+                "sq_error": 0.0012350986944511533,
+                "raw_value": 0.0
+            },
+            {
+                "feature": "FE_Claimed_Ratio",
+                "sq_error": 0.0006022119778208435,
+                "raw_value": 1.0
+            }
+        ]
+    },
+    {
+        "claim_id": "3837856",
+        "total_mse": 0.007180176209658384,
+        "top_contributions": [
+            {
+                "feature": "FE_Icdid_Freq",
+                "sq_error": 0.08781032264232635,
+                "raw_value": 0.46891599893569946
+            },
+            {
+                "feature": "FE_SubmissionDelay",
+                "sq_error": 0.003049433697015047,
+                "raw_value": 1.0
+            },
+            {
+                "feature": "FE_Claimed_Minus_Approved",
+                "sq_error": 0.000910045113414526,
+                "raw_value": 0.0
+            },
+            {
+                "feature": "FE_Hfid_Freq",
+                "sq_error": 0.0006039970321580768,
+                "raw_value": 0.0031999999191612005
+            },
+            {
+                "feature": "FE_Claimed_Ratio",
+                "sq_error": 0.00036957889096811414,
+                "raw_value": 1.0
+            }
+        ]
+    },
+    {
+        "claim_id": "3837863",
+        "total_mse": 0.007817563600838184,
+        "top_contributions": [
+            {
+                "feature": "FE_Icdid_Freq",
+                "sq_error": 0.09301042556762695,
+                "raw_value": 0.46891599893569946
+            },
+            {
+                "feature": "FE_SubmissionDelay",
+                "sq_error": 0.004444849211722612,
+                "raw_value": 5.0
+            },
+            {
+                "feature": "FE_Hfid_Freq",
+                "sq_error": 0.001481011975556612,
+                "raw_value": 0.0015839999541640282
+            },
+            {
+                "feature": "FE_Approved",
+                "sq_error": 0.0012795525835826993,
+                "raw_value": 0.0
+            },
+            {
+                "feature": "FE_Claimed_Ratio",
+                "sq_error": 0.0005370185244828463,
+                "raw_value": 1.0
+            }
+        ]
+    }
+]

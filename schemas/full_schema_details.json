@@ -1,0 +1,1989 @@
+{
+  "TblClaim.csv": {
+    "row_count": 14242741,
+    "col_count": 56,
+    "size_mb": 3722.08,
+    "columns": [
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "9 Apr, 2025, 20:40, 9 Apr, 2025, 20:44, 9 Apr, 2025, 20:45"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "str",
+        "sample_null_pct": 99.1,
+        "samples": "27 Apr, 2026, 07:40, 22 Apr, 2026, 15:11, 22 Apr, 2026, 15:1"
+      },
+      {
+        "name": "LegacyID",
+        "dtype": "str",
+        "sample_null_pct": 99.1,
+        "samples": "14 889 876, 12 315 166, 14 889 967"
+      },
+      {
+        "name": "ClaimID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "3837846, 3837847, 3837856"
+      },
+      {
+        "name": "ClaimUUID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "17f28335-d5ba-4bd8-b607-610917cd3058, 13c8681b-a380-42c8-9d4"
+      },
+      {
+        "name": "ClaimCategory",
+        "dtype": "str",
+        "sample_null_pct": 7.2,
+        "samples": "V, A, H"
+      },
+      {
+        "name": "ClaimCode",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "510186A62, ES008.2025.VIH.000282, 76745003"
+      },
+      {
+        "name": "DateFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "2 Apr, 2025, 8 Apr, 2025, 3 Apr, 2025"
+      },
+      {
+        "name": "DateTo",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "2 Apr, 2025, 8 Apr, 2025, 3 Apr, 2025"
+      },
+      {
+        "name": "ClaimStatus",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "16, 4, 1"
+      },
+      {
+        "name": "Adjustment",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Claimed",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "5 020, 600, 7 000"
+      },
+      {
+        "name": "Approved",
+        "dtype": "str",
+        "sample_null_pct": 7.2,
+        "samples": "5 020, 600, 7 000"
+      },
+      {
+        "name": "Reinsured",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Valuated",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "DateClaimed",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "9 Apr, 2025, 10 Apr, 2025, 12 Apr, 2025"
+      },
+      {
+        "name": "DateProcessed",
+        "dtype": "str",
+        "sample_null_pct": 17.3,
+        "samples": "20 Dec, 2025, 9 Oct, 2025, 15 Oct, 2025"
+      },
+      {
+        "name": "Feedback",
+        "dtype": "bool",
+        "sample_null_pct": 0.0,
+        "samples": "False"
+      },
+      {
+        "name": "Explanation",
+        "dtype": "str",
+        "sample_null_pct": 100.0,
+        "samples": "120, Jumeaux 1"
+      },
+      {
+        "name": "FeedbackStatus",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1, 4"
+      },
+      {
+        "name": "ReviewStatus",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "8, 1, 4"
+      },
+      {
+        "name": "ApprovalStatus",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1"
+      },
+      {
+        "name": "RejectionReason",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "0, 1"
+      },
+      {
+        "name": "AuditUserID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "8 315, 2 461, 1 829"
+      },
+      {
+        "name": "ValidityFromReview",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ValidityToReview",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "SubmitStamp",
+        "dtype": "str",
+        "sample_null_pct": 7.2,
+        "samples": "10 Apr, 2025, 20:18, 30 Sep, 2025, 06:41, 3 Oct, 2025, 01:02"
+      },
+      {
+        "name": "ProcessStamp",
+        "dtype": "str",
+        "sample_null_pct": 17.3,
+        "samples": "20 Dec, 2025, 09:30, 9 Oct, 2025, 13:18, 15 Oct, 2025, 07:12"
+      },
+      {
+        "name": "Remunerated",
+        "dtype": "str",
+        "sample_null_pct": 99.1,
+        "samples": "4 340, 2 500, 1 380"
+      },
+      {
+        "name": "GuaranteeId",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "VisitType",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "O, R, E"
+      },
+      {
+        "name": "AuditUserIDReview",
+        "dtype": "str",
+        "sample_null_pct": 16.4,
+        "samples": "2 099, 11 369, 2 129"
+      },
+      {
+        "name": "AuditUserIDSubmit",
+        "dtype": "str",
+        "sample_null_pct": 1.1,
+        "samples": "1 740, 2 365, 9 489"
+      },
+      {
+        "name": "AuditUserIDProcess",
+        "dtype": "str",
+        "sample_null_pct": 16.7,
+        "samples": "2 098, 9 565, 3 412"
+      },
+      {
+        "name": "Adjuster",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ClaimAdminId",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "7013, 1168, 665"
+      },
+      {
+        "name": "RunID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "FeedbackID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Hfid",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "3596, 659, 343"
+      },
+      {
+        "name": "Icdid",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "2021, 1930, 2194"
+      },
+      {
+        "name": "Icdid1",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Icdid2",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Icdid3",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Icdid4",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "InsureeID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "10125965, 9759494, 10445635"
+      },
+      {
+        "name": "RowID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Program",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "4, 1, 3"
+      },
+      {
+        "name": "CareType",
+        "dtype": "str",
+        "sample_null_pct": 99.5,
+        "samples": "OPD, IPD"
+      },
+      {
+        "name": "TDRResult",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "TestNumber",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "JsonExt",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "{}"
+      },
+      {
+        "name": "RestoredClaim",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ReferFrom",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ReferTo",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "PregnancyAge",
+        "dtype": "float64",
+        "sample_null_pct": 99.9,
+        "samples": "27.0, 24.0, 18.0"
+      },
+      {
+        "name": "Source",
+        "dtype": "str",
+        "sample_null_pct": 99.5,
+        "samples": "WEB"
+      }
+    ]
+  },
+  "TblClaimItems.csv": {
+    "row_count": 1728,
+    "col_count": 31,
+    "size_mb": 0.17,
+    "columns": [
+      {
+        "name": "ClaimItemID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "25, 26, 27"
+      },
+      {
+        "name": "ClaimID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "4022020, 4153571, 4153575"
+      },
+      {
+        "name": "ItemID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "290, 270, 265"
+      },
+      {
+        "name": "ProdID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ClaimItemStatus",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1, 2"
+      },
+      {
+        "name": "Availability",
+        "dtype": "bool",
+        "sample_null_pct": 0.0,
+        "samples": "True"
+      },
+      {
+        "name": "QtyProvided",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1, 3, 30"
+      },
+      {
+        "name": "QtyApproved",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "PriceAsked",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "5, 1000, 0"
+      },
+      {
+        "name": "PriceAdjusted",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "PriceApproved",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "PriceValuated",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Explanation",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Justification",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "RejectionReason",
+        "dtype": "float64",
+        "sample_null_pct": 31.0,
+        "samples": "0.0, 2.0"
+      },
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "2025-04-19 15:01:02.787, 2025-04-23 04:08:29.423, 2025-04-23"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "str",
+        "sample_null_pct": 26.0,
+        "samples": "2025-06-28 22:07:36.923, 2025-07-02 22:57:03.170, 2025-07-04"
+      },
+      {
+        "name": "LegacyID",
+        "dtype": "float64",
+        "sample_null_pct": 26.0,
+        "samples": "190.0, 207.0, 206.0"
+      },
+      {
+        "name": "AuditUserID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "2062, 8452, 5201"
+      },
+      {
+        "name": "ValidityFromReview",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ValidityToReview",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "AuditUserIDReview",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "LimitationValue",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Limitation",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "PolicyID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "RemuneratedAmount",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "DeductableAmount",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ExceedCeilingAmount",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "PriceOrigin",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ExceedCeilingAmountCategory",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "JsonExt",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      }
+    ]
+  },
+  "TblClaimServices.csv": {
+    "row_count": 15774762,
+    "col_count": 30,
+    "size_mb": 1770.86,
+    "columns": [
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "4 Mar, 2024, 13:52, 4 Mar, 2024, 13:36, 4 Mar, 2024, 14:13"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "str",
+        "sample_null_pct": 26.9,
+        "samples": "13 Apr, 2026, 18:34, 13 Apr, 2026, 18:35, 13 Apr, 2026, 18:3"
+      },
+      {
+        "name": "LegacyID",
+        "dtype": "str",
+        "sample_null_pct": 26.9,
+        "samples": "168 218, 168 219, 167 908"
+      },
+      {
+        "name": "ClaimServiceID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "49639546, 49639547, 168218"
+      },
+      {
+        "name": "ClaimServiceStatus",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1, 2"
+      },
+      {
+        "name": "QtyProvided",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1"
+      },
+      {
+        "name": "QtyApproved",
+        "dtype": "float64",
+        "sample_null_pct": 99.6,
+        "samples": "0.0"
+      },
+      {
+        "name": "PriceAsked",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "600, 1 500, 1 000"
+      },
+      {
+        "name": "PriceAdjusted",
+        "dtype": "str",
+        "sample_null_pct": 71.2,
+        "samples": "600, 1 500, 1 000"
+      },
+      {
+        "name": "PriceApproved",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "PriceValuated",
+        "dtype": "str",
+        "sample_null_pct": 71.2,
+        "samples": "600, 1 500, 0"
+      },
+      {
+        "name": "Explanation",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Justification",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "RejectionReason",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "0, 5, 16"
+      },
+      {
+        "name": "AuditUserID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "3 537, 3 555, 3 520"
+      },
+      {
+        "name": "ValidityFromReview",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ValidityToReview",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "AuditUserIDReview",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "LimitationValue",
+        "dtype": "float64",
+        "sample_null_pct": 0.7,
+        "samples": "100.0"
+      },
+      {
+        "name": "Limitation",
+        "dtype": "str",
+        "sample_null_pct": 0.7,
+        "samples": "C"
+      },
+      {
+        "name": "RemuneratedAmount",
+        "dtype": "str",
+        "sample_null_pct": 71.2,
+        "samples": "600, 1 500, 0"
+      },
+      {
+        "name": "DeductableAmount",
+        "dtype": "float64",
+        "sample_null_pct": 71.2,
+        "samples": "0.0"
+      },
+      {
+        "name": "ExceedCeilingAmount",
+        "dtype": "float64",
+        "sample_null_pct": 71.2,
+        "samples": "0.0"
+      },
+      {
+        "name": "PriceOrigin",
+        "dtype": "str",
+        "sample_null_pct": 0.7,
+        "samples": "P"
+      },
+      {
+        "name": "ExceedCeilingAmountCategory",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ClaimID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "14495594, 155536, 155495"
+      },
+      {
+        "name": "PolicyID",
+        "dtype": "float64",
+        "sample_null_pct": 0.7,
+        "samples": "76273.0, 92866.0, 92838.0"
+      },
+      {
+        "name": "ProdID",
+        "dtype": "float64",
+        "sample_null_pct": 0.7,
+        "samples": "72.0, 60.0, 68.0"
+      },
+      {
+        "name": "ServiceID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "91, 115, 103"
+      },
+      {
+        "name": "JsonExt",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      }
+    ]
+  },
+  "TblFamilies.csv": {
+    "row_count": 5784324,
+    "col_count": 19,
+    "size_mb": 626.91,
+    "columns": [
+      {
+        "name": "FamilyID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "3641, 3642, 3643"
+      },
+      {
+        "name": "FamilyUUID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "0e88cf96-c6d6-4024-a12d-82748f8117c7, 12816c07-6a29-4b6b-b47"
+      },
+      {
+        "name": "LegacyID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Poverty",
+        "dtype": "bool",
+        "sample_null_pct": 0.0,
+        "samples": "False"
+      },
+      {
+        "name": "FamilyAddress",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "Rue du Lac"
+      },
+      {
+        "name": "IsOffline",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Ethnicity",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ConfirmationNo",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "3 Sep, 2023, 08:14, 3 Sep, 2023, 08:15, 3 Sep, 2023, 08:16"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "AuditUserID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "1 324"
+      },
+      {
+        "name": "ConfirmationType",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "FamilyType",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "H"
+      },
+      {
+        "name": "InsureeID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "10823, 10826, 10829"
+      },
+      {
+        "name": "LocationId",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "3499"
+      },
+      {
+        "name": "RowID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Source",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "SourceVersion",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "JsonExt",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      }
+    ]
+  },
+  "TblHF.csv": {
+    "row_count": 2512,
+    "col_count": 27,
+    "size_mb": 0.38,
+    "columns": [
+      {
+        "name": "HfID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "30, 31, 32"
+      },
+      {
+        "name": "HfUUID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "61334b86-c14e-4bcf-a679-7f8aaec867e5, e4d184c2-8394-4e13-98b"
+      },
+      {
+        "name": "HFCode",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "80001, 80019, AD007"
+      },
+      {
+        "name": "HFName",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "CSI SONUB Foulbere, HD SONUC Figuil, HD Dang"
+      },
+      {
+        "name": "LegalForm",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "G, P, C"
+      },
+      {
+        "name": "HFLevel",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "D, H, C"
+      },
+      {
+        "name": "HFSublevel",
+        "dtype": "str",
+        "sample_null_pct": 21.8,
+        "samples": "R, N, I"
+      },
+      {
+        "name": "HFAddress",
+        "dtype": "float64",
+        "sample_null_pct": 99.6,
+        "samples": "698954600.0"
+      },
+      {
+        "name": "LocationId",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "165, 164, 240"
+      },
+      {
+        "name": "Phone",
+        "dtype": "float64",
+        "sample_null_pct": 98.4,
+        "samples": "696022790.0, 698954600.0, 699343739.0"
+      },
+      {
+        "name": "Fax",
+        "dtype": "float64",
+        "sample_null_pct": 99.6,
+        "samples": "10.0"
+      },
+      {
+        "name": "EMail",
+        "dtype": "str",
+        "sample_null_pct": 99.0,
+        "samples": "moussa.hadidja@giz.de, alphonse.dana@giz.de"
+      },
+      {
+        "name": "HFCareType",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "O, B, I"
+      },
+      {
+        "name": "PLServiceID",
+        "dtype": "float64",
+        "sample_null_pct": 2.7,
+        "samples": "47.0, 24.0, 25.0"
+      },
+      {
+        "name": "PLItemID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "AccCode",
+        "dtype": "str",
+        "sample_null_pct": 3.0,
+        "samples": "80001, 80019, AD007"
+      },
+      {
+        "name": "OffLine",
+        "dtype": "bool",
+        "sample_null_pct": 0.0,
+        "samples": "False"
+      },
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "2023-07-06 06:56:04.200, 2023-05-04 09:30:25.570, 2023-05-05"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "str",
+        "sample_null_pct": 57.9,
+        "samples": "2023-07-19 21:27:07.280, 2023-07-19 21:27:16.317, 2023-07-19"
+      },
+      {
+        "name": "LegacyID",
+        "dtype": "float64",
+        "sample_null_pct": 60.2,
+        "samples": "30.0, 31.0, 32.0"
+      },
+      {
+        "name": "AuditUserID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1090, 1048, 48"
+      },
+      {
+        "name": "RowID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "0x00000000"
+      },
+      {
+        "name": "BankName",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "JsonExt",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ContractEndDate",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ContractStartDate",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Status",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "AC"
+      }
+    ]
+  },
+  "TblICDCodes.csv": {
+    "row_count": 2203,
+    "col_count": 8,
+    "size_mb": 0.26,
+    "columns": [
+      {
+        "name": "Icdid",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "2, 3, 4"
+      },
+      {
+        "name": "ICDCode",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "A00, A01, A02"
+      },
+      {
+        "name": "ICDName",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "Cholera, Typhoid and paratyphoid fevers, Other salmonella in"
+      },
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "2018-03-19 06:59:00.533, 2018-03-19 07:02:37.943, 2018-03-19"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "str",
+        "sample_null_pct": 13.3,
+        "samples": "2023-11-25 16:51:21.143"
+      },
+      {
+        "name": "LegacyID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "AuditUserID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1327"
+      },
+      {
+        "name": "RowID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "0x00000000"
+      }
+    ]
+  },
+  "TblInsuree.csv": {
+    "row_count": 11647016,
+    "col_count": 40,
+    "size_mb": 5501.48,
+    "columns": [
+      {
+        "name": "InsureeID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "4717550, 4717553, 4717556"
+      },
+      {
+        "name": "AuditUserID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "1 323, 1 507, 1 503"
+      },
+      {
+        "name": "Chfid",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "bb3c80dea52ac1302d5c9c162fd202e39468c219a9fd1f08bd55d62d5fef"
+      },
+      {
+        "name": "CardIssued",
+        "dtype": "bool",
+        "sample_null_pct": 0.0,
+        "samples": "False"
+      },
+      {
+        "name": "CurrentAddress",
+        "dtype": "str",
+        "sample_null_pct": 0.6,
+        "samples": "Rue du Lac"
+      },
+      {
+        "name": "CurrentVillage",
+        "dtype": "str",
+        "sample_null_pct": 0.6,
+        "samples": "3 054"
+      },
+      {
+        "name": "Dob",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "14 Nov, 1979, 11 Apr, 2010, 19 Oct, 2020"
+      },
+      {
+        "name": "Education",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Email",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "ac1c2545f4cadeba002b11be05e2fb1d6f09b5973e8efc303e19c1b38ccc"
+      },
+      {
+        "name": "FamilyID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1570829, 1570830, 1570831"
+      },
+      {
+        "name": "Gender",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "F, M"
+      },
+      {
+        "name": "GeoLocation",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Hfid",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "InsureeUUID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "872bec4a-1d48-4927-ae16-4721c3132bb1, 5a50a15d-c7f5-4abe-b93"
+      },
+      {
+        "name": "IsHead",
+        "dtype": "bool",
+        "sample_null_pct": 0.0,
+        "samples": "False, True"
+      },
+      {
+        "name": "LastName",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "a2ecb3f6914845a9cb3f777033b1ca481408beee071f9915b8ca2f22cdca"
+      },
+      {
+        "name": "LegacyID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Marital",
+        "dtype": "str",
+        "sample_null_pct": 0.6,
+        "samples": "M"
+      },
+      {
+        "name": "OtherNames",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "43a39a25338e5350c9d41f223fa69acaadfa9c66209f9cbbd4ddaf786bee"
+      },
+      {
+        "name": "Phone",
+        "dtype": "str",
+        "sample_null_pct": 0.6,
+        "samples": "6321b3579a9d33536b98f74de3a06315a806c2a13d8dbff1a4ebba20d9e4"
+      },
+      {
+        "name": "PhotoDate",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "PhotoID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Profession",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Relationship",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "RowID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "TypeOfId",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "26 Nov, 2023, 18:59, 26 Nov, 2023, 19:00, 26 Nov, 2023, 19:0"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Vulnerability",
+        "dtype": "bool",
+        "sample_null_pct": 0.0,
+        "samples": "False"
+      },
+      {
+        "name": "IsOffline",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Passport",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Source",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "SourceVersion",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "JsonExt",
+        "dtype": "str",
+        "sample_null_pct": 100.0,
+        "samples": "{}"
+      },
+      {
+        "name": "Dead",
+        "dtype": "bool",
+        "sample_null_pct": 0.0,
+        "samples": "False"
+      },
+      {
+        "name": "Dod",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "DeathReason",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Status",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "AC"
+      },
+      {
+        "name": "Status Date",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "StatusReason",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      }
+    ]
+  },
+  "TblInsureePolicy.csv": {
+    "row_count": 1239874,
+    "col_count": 13,
+    "size_mb": 135.82,
+    "columns": [
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "17 Jan, 2026, 11:20, 23 Feb, 2026, 02:28, 7 Jan, 2026, 13:48"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "str",
+        "sample_null_pct": 68.5,
+        "samples": "17 Jan, 2026, 11:20, 23 Feb, 2026, 02:28, 7 Jan, 2026, 13:48"
+      },
+      {
+        "name": "LegacyID",
+        "dtype": "str",
+        "sample_null_pct": 99.7,
+        "samples": "643 437, 553 308, 649 691"
+      },
+      {
+        "name": "InsureePolicyID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "643437, 643714, 643917"
+      },
+      {
+        "name": "EnrollmentDate",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "14 Jul, 2025, 25 Sep, 2025, 1 Jan, 2025"
+      },
+      {
+        "name": "StartDate",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "14 Jul, 2025, 25 Sep, 2025, 10 Nov, 2024"
+      },
+      {
+        "name": "EffectiveDate",
+        "dtype": "str",
+        "sample_null_pct": 0.9,
+        "samples": "14 Jul, 2025, 25 Sep, 2025, 10 Nov, 2024"
+      },
+      {
+        "name": "ExpiryDate",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "13 May, 2026, 24 Apr, 2026, 9 Nov, 2025"
+      },
+      {
+        "name": "IsOffline",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "AuditUserID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "1 833, 8 322, 1 635"
+      },
+      {
+        "name": "InsureeID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "10502983, 10905747, 1051806"
+      },
+      {
+        "name": "PolicyId",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "947181, 947648, 947972"
+      },
+      {
+        "name": "RowID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      }
+    ]
+  },
+  "TblItems.csv": {
+    "row_count": 176,
+    "col_count": 19,
+    "size_mb": 0.02,
+    "columns": [
+      {
+        "name": "ItemID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "258, 259, 260"
+      },
+      {
+        "name": "ItemUUID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "eb322434-1761-4ee6-b6d5-30dfb3f75798, 2d4b87bd-a81e-4f06-a6e"
+      },
+      {
+        "name": "ItemCode",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "123, ICS1, ICS2"
+      },
+      {
+        "name": "ItemName",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "ASPIRINE, Test VIH, Test Syphilis VDRL / VDRL et PPHA"
+      },
+      {
+        "name": "ItemType",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "D, M"
+      },
+      {
+        "name": "Quantity",
+        "dtype": "float64",
+        "sample_null_pct": 97.2,
+        "samples": "1.0"
+      },
+      {
+        "name": "ItemPackage",
+        "dtype": "str",
+        "sample_null_pct": 98.3,
+        "samples": "1, 1 pair"
+      },
+      {
+        "name": "ItemPrice",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1500, 0, 1000"
+      },
+      {
+        "name": "ItemCareType",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "B"
+      },
+      {
+        "name": "ItemFrequency",
+        "dtype": "float64",
+        "sample_null_pct": 2.8,
+        "samples": "2.0, 0.0, 365.0"
+      },
+      {
+        "name": "ItemPatCat",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "7, 6"
+      },
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "2023-07-03 00:30:01.320, 2023-07-03 00:27:34.613, 2023-01-01"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "str",
+        "sample_null_pct": 96.0,
+        "samples": "2023-07-03 00:30:01.320, 2023-07-03 00:30:01.317, 2023-08-24"
+      },
+      {
+        "name": "LegacyID",
+        "dtype": "float64",
+        "sample_null_pct": 96.6,
+        "samples": "258.0, 260.0, 426.0"
+      },
+      {
+        "name": "AuditUserID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1, 49"
+      },
+      {
+        "name": "RowID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "0x00000000"
+      },
+      {
+        "name": "Program",
+        "dtype": "float64",
+        "sample_null_pct": 1.1,
+        "samples": "4.0, 1.0"
+      },
+      {
+        "name": "Health Facility",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "MaximumAmount",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      }
+    ]
+  },
+  "TblLocations.csv": {
+    "row_count": 14211,
+    "col_count": 16,
+    "size_mb": 1.66,
+    "columns": [
+      {
+        "name": "LocationId",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "95, 96, 97"
+      },
+      {
+        "name": "LocationUUID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "287d5b26-a00a-4b69-be15-c283c9d55621, f7f20bc7-a01a-44b7-8da"
+      },
+      {
+        "name": "LocationCode",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "01AKA, 01AWA, 01AYO"
+      },
+      {
+        "name": "LocationName",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "Akonolinga, Awae, Ayos"
+      },
+      {
+        "name": "ParentLocationId",
+        "dtype": "float64",
+        "sample_null_pct": 1.0,
+        "samples": "86.0, 87.0, 88.0"
+      },
+      {
+        "name": "LocationType",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "D, W, V"
+      },
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "2022-07-26 11:27:45.510, 2022-07-26 11:27:45.517, 2022-07-26"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "str",
+        "sample_null_pct": 83.3,
+        "samples": "2023-08-15 00:00:00.000, 2025-04-16 06:34:48.870, 2025-04-18"
+      },
+      {
+        "name": "LegacyId",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "AuditUserId",
+        "dtype": "float64",
+        "sample_null_pct": 91.4,
+        "samples": "2132.0, 1327.0, 2116.0"
+      },
+      {
+        "name": "RowId",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "0x00000000"
+      },
+      {
+        "name": "MalePopulation",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "0.0"
+      },
+      {
+        "name": "FemalePopulation",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "0.0"
+      },
+      {
+        "name": "OtherPopulation",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "0.0"
+      },
+      {
+        "name": "Families",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "0.0"
+      },
+      {
+        "name": "JsonExt",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      }
+    ]
+  },
+  "TblPolicy.csv": {
+    "row_count": 1758198,
+    "col_count": 23,
+    "size_mb": 307.86,
+    "columns": [
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "4 Dec, 2023, 16:40, 4 Dec, 2023, 16:44, 4 Dec, 2023, 16:52"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "str",
+        "sample_null_pct": 56.8,
+        "samples": "4 Dec, 2023, 16:46, 4 Dec, 2023, 16:51, 4 Dec, 2023, 16:54"
+      },
+      {
+        "name": "LegacyID",
+        "dtype": "str",
+        "sample_null_pct": 60.4,
+        "samples": "4 010, 4 013, 4 018"
+      },
+      {
+        "name": "PolicyID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "4015, 4016, 4017"
+      },
+      {
+        "name": "PolicyUUID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "8390c33f-17ce-4a50-9791-6b1dff830180, 5fefee6a-358d-4b37-8b5"
+      },
+      {
+        "name": "PolicyStage",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "N, R"
+      },
+      {
+        "name": "PolicyStatus",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1, 2, 8"
+      },
+      {
+        "name": "PolicyValue",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "6 000, 0"
+      },
+      {
+        "name": "EnrollDate",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "30 Nov, 2023, 22 Nov, 2023, 22 May, 2023"
+      },
+      {
+        "name": "StartDate",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "30 Nov, 2023, 22 Nov, 2023, 22 May, 2023"
+      },
+      {
+        "name": "EffectiveDate",
+        "dtype": "str",
+        "sample_null_pct": 37.1,
+        "samples": "22 Nov, 2023, 22 May, 2023, 1 Apr, 2023"
+      },
+      {
+        "name": "ExpiryDate",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "30 Jun, 2024, 21 Nov, 2024, 21 May, 2024"
+      },
+      {
+        "name": "IsOffline",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "AuditUserID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "1 978, 1 713, 1 816"
+      },
+      {
+        "name": "FamilyID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "1633684, 534766, 1633717"
+      },
+      {
+        "name": "OfficerID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "763, 582, 671"
+      },
+      {
+        "name": "ProdID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "67, 72, 65"
+      },
+      {
+        "name": "RowID",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "Source",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "SourceVersion",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      },
+      {
+        "name": "CreationDate",
+        "dtype": "str",
+        "sample_null_pct": 99.0,
+        "samples": "16 Feb, 2025, 17 Feb, 2025, 20 Feb, 2025"
+      },
+      {
+        "name": "PolicyNumber",
+        "dtype": "float64",
+        "sample_null_pct": 26.7,
+        "samples": "500133.0, 350639.0, 512623.0"
+      },
+      {
+        "name": "PregnancyAge",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      }
+    ]
+  },
+  "TblServices.csv": {
+    "row_count": 27832,
+    "col_count": 20,
+    "size_mb": 5.08,
+    "columns": [
+      {
+        "name": "ServiceID",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "91, 92, 93"
+      },
+      {
+        "name": "ServiceUUID",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "5e4867b7-c38e-4b82-9502-0ac6b2423433, 7483d719-984a-4769-b70"
+      },
+      {
+        "name": "ServCode",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "UVIH1, UVIH2, UVIH3"
+      },
+      {
+        "name": "ServName",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "Consultation de routine VIH, Consultation pr\u00e9natale 1, Carne"
+      },
+      {
+        "name": "ServType",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "C, P"
+      },
+      {
+        "name": "ServLevel",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "V, S, H"
+      },
+      {
+        "name": "ServPrice",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "600, 500, 1000"
+      },
+      {
+        "name": "ServCareType",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "O, B, I"
+      },
+      {
+        "name": "ServFrequency",
+        "dtype": "float64",
+        "sample_null_pct": 3.6,
+        "samples": "90.0, 335.0, 365.0"
+      },
+      {
+        "name": "ValidityFrom",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "2023-01-01 00:00:00.000, 2018-01-01 00:00:00.000, 2023-01-01"
+      },
+      {
+        "name": "ValidityTo",
+        "dtype": "str",
+        "sample_null_pct": 98.2,
+        "samples": "2023-07-06 05:52:36.473, 2023-07-03 00:29:46.887, 2023-07-03"
+      },
+      {
+        "name": "LegacyID",
+        "dtype": "float64",
+        "sample_null_pct": 98.2,
+        "samples": "106.0, 105.0, 110.0"
+      },
+      {
+        "name": "AuditUserID",
+        "dtype": "float64",
+        "sample_null_pct": 95.2,
+        "samples": "1327.0, 1909.0, 1.0"
+      },
+      {
+        "name": "ServCategory",
+        "dtype": "str",
+        "sample_null_pct": 3.0,
+        "samples": "A, C, D"
+      },
+      {
+        "name": "ManualPrice",
+        "dtype": "bool",
+        "sample_null_pct": 0.0,
+        "samples": "False, True"
+      },
+      {
+        "name": "ServPackageType",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "S, P, F"
+      },
+      {
+        "name": "ServPatCat",
+        "dtype": "int64",
+        "sample_null_pct": 0.0,
+        "samples": "15, 6, 11"
+      },
+      {
+        "name": "Program",
+        "dtype": "float64",
+        "sample_null_pct": 0.3,
+        "samples": "1.0, 5.0, 3.0"
+      },
+      {
+        "name": "Health Facility",
+        "dtype": "float64",
+        "sample_null_pct": 4.8,
+        "samples": "450.0, 444.0, 491.0"
+      },
+      {
+        "name": "MaximumAmount",
+        "dtype": "float64",
+        "sample_null_pct": 100.0,
+        "samples": "All NaN"
+      }
+    ]
+  },
+  "UvwLocations.csv": {
+    "row_count": 4136,
+    "col_count": 14,
+    "size_mb": 0.29,
+    "columns": [
+      {
+        "name": "LocationId",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "0, 85, 86"
+      },
+      {
+        "name": "RegionId",
+        "dtype": "float64",
+        "sample_null_pct": 0.0,
+        "samples": "85.0, 86.0, 87.0"
+      },
+      {
+        "name": "RegionCode",
+        "dtype": "float64",
+        "sample_null_pct": 0.0,
+        "samples": "10.0, 1.0, 2.0"
+      },
+      {
+        "name": "RegionName",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "National, Sud, Centre"
+      },
+      {
+        "name": "DistrictId",
+        "dtype": "float64",
+        "sample_null_pct": 0.3,
+        "samples": "274.0, 275.0, 276.0"
+      },
+      {
+        "name": "DistrictCode",
+        "dtype": "str",
+        "sample_null_pct": 0.3,
+        "samples": "10AMB, 10DJM, 10EBO"
+      },
+      {
+        "name": "DistrictName",
+        "dtype": "str",
+        "sample_null_pct": 0.3,
+        "samples": "Ambam, Djoum, Ebolowa"
+      },
+      {
+        "name": "WardId",
+        "dtype": "float64",
+        "sample_null_pct": 5.3,
+        "samples": "1979.0, 1980.0, 1981.0"
+      },
+      {
+        "name": "WardCode",
+        "dtype": "str",
+        "sample_null_pct": 5.3,
+        "samples": "10AMB01, 10AMB02, 10AMB03"
+      },
+      {
+        "name": "WardName",
+        "dtype": "str",
+        "sample_null_pct": 5.3,
+        "samples": "Abang - Minko, Ambam, Evouzok"
+      },
+      {
+        "name": "VillageId",
+        "dtype": "float64",
+        "sample_null_pct": 53.7,
+        "samples": "3976.0, 3977.0, 3978.0"
+      },
+      {
+        "name": "VillageCode",
+        "dtype": "str",
+        "sample_null_pct": 53.7,
+        "samples": "10AMB01V, 10AMB02V, 10AMB03V"
+      },
+      {
+        "name": "VillageName",
+        "dtype": "str",
+        "sample_null_pct": 53.7,
+        "samples": "Abang - Minko, Ambam, Evouzok"
+      },
+      {
+        "name": "ParentLocationId",
+        "dtype": "str",
+        "sample_null_pct": 0.0,
+        "samples": "0, 85, 86"
+      }
+    ]
+  }
+}

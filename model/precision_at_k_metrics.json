@@ -1,0 +1,32 @@
+{
+    "Top_0.1%": {
+        "k_count": 500,
+        "precision_at_k": 0.214,
+        "enrichment_factor": 7.941220127653258
+    },
+    "Top_0.5%": {
+        "k_count": 2500,
+        "precision_at_k": 0.1224,
+        "enrichment_factor": 4.542081044975508
+    },
+    "Top_1.0%": {
+        "k_count": 5000,
+        "precision_at_k": 0.092,
+        "enrichment_factor": 3.413982484785513
+    },
+    "Top_2.0%": {
+        "k_count": 10000,
+        "precision_at_k": 0.0801,
+        "enrichment_factor": 2.9723912720795607
+    },
+    "Top_5.0%": {
+        "k_count": 25000,
+        "precision_at_k": 0.04104,
+        "enrichment_factor": 1.522933056256494
+    },
+    "Top_10.0%": {
+        "k_count": 50000,
+        "precision_at_k": 0.08226,
+        "enrichment_factor": 3.0525456434614813
+    }
+}
