@@ -86,3 +86,12 @@ data/*.7z
 *.log
 *.tmp
 *.bak
+scratch_*.txt
+
+# Report generator scripts and extra markdown documents
+generate_*.py
+reports/generate_*.py
+reports/*.md
+build_*_notebook.py
+scripts/build_*_notebook.py
+

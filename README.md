@@ -64,21 +64,17 @@ Cameroon-2.0/
 │   ├── Healthcare_Claim_HDBSCAN_GLOSH_Fraud_Detection.ipynb
 │   ├── Healthcare_Claim_IsolationForest_Fraud_Detection.ipynb
 │   └── Healthcare_Claim_LightGBM_Rejection_Prediction.ipynb
-├── reports/                            # Technical reports & automated document generators
-│   ├── figures/                        # High-resolution latent space and ROC curves
-│   ├── Autoencoder_Results_Report.docx
-│   ├── Data_Quality_and_Fraud_Detection_Report.docx
-│   ├── Fraud_Detection_Machine_Learning_Models_Report.docx
-│   ├── Independent Technical Review.docx
-│   ├── Main Tables and Relationships used.docx
-│   ├── generate_autoencoder_report.py  # Automated report generator for Autoencoder
-│   ├── generate_data_quality_report.py # Automated report generator for OpenIMIS data quality
-│   └── generate_ml_report.py          # Automated report generator for ML benchmarks
+├── reports/                            # Technical Model Reports (one DOCX per algorithm)
+│   ├── figures/                        # High-resolution latent space, ROC and calibration curves
+│   ├── Autoencoder_Report.docx         # Deep Autoencoder Anomaly Detection Report
+│   ├── ECOD_COPOD_Report.docx          # ECOD & COPOD Tail Probability Detection Report
+│   ├── HDBSCAN_GLOSH_Report.docx       # Provider-Level HDBSCAN & GLOSH Clustering Report
+│   ├── Isolation_Forest_Report.docx    # Isolation Forest Outlier Detection Report
+│   └── LightGBM_Report.docx            # Supervised LightGBM Rejection Prediction Report
 ├── schemas/                            # Relational schema dictionaries & table stats
 │   ├── full_schema_details.json        # 316-column itemized data dictionary
 │   └── table_summary.json              # Row counts, column counts, and sizes
-├── scripts/                            # Utility & evaluation execution scripts
-│   ├── build_autoencoder_notebook.py   # Script to re-generate autoencoder notebook
+├── scripts/                            # Evaluation execution scripts
 │   └── run_autoencoder_eval_viz.py     # Evaluation, UMAP/t-SNE & figure generator
 ├── src/                                # Modular core Python package
 │   ├── __init__.py
@@ -162,17 +158,13 @@ python scripts/run_autoencoder_eval_viz.py
 ```
 *Generates high-dimensional PCA, t-SNE, and UMAP latent space projections into `reports/figures/`.*
 
-### Rebuilding Technical Word (DOCX) Reports
-```bash
-# Generate Comprehensive openIMIS Data Quality Report
-python reports/generate_data_quality_report.py
-
-# Generate Machine Learning Model Comparison Report
-python reports/generate_ml_report.py
-
-# Generate Deep Autoencoder Full Technical Report
-python reports/generate_autoencoder_report.py
-```
+### Model Technical Reports (Word DOCX)
+Comprehensive evaluation reports for each machine learning algorithm are located in [`reports/`](reports/):
+- **`Autoencoder_Report.docx`**: Deep neural reconstruction anomaly detection, architecture sweep, Precision@K audit queues.
+- **`LightGBM_Report.docx`**: Supervised gradient boosted trees across 13 tables, focal loss calibration, and TreeSHAP importance.
+- **`Isolation_Forest_Report.docx`**: Ensemble tree-partitioning outlier isolation, path length distributions, and screening efficiency.
+- **`ECOD_COPOD_Report.docx`**: Non-parametric empirical CDF tail probability anomaly detection and cold-start screening.
+- **`HDBSCAN_GLOSH_Report.docx`**: Facility-month clustering, GLOSH local density outlier scoring, and triage tiers.
 
 ---
 
