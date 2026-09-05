@@ -124,6 +124,16 @@ class TopFeatureContribution(BaseModel):
     explanation: str = Field(..., description="Plain-language clinical/administrative rationale")
 
 
+class GuardrailWarningItem(BaseModel):
+    """A single guardrail violation or out-of-distribution detection."""
+    code: str = Field(..., description="Machine-readable warning code (e.g., EXTREME_CLAIMED_AMOUNT, OOD_FEATURE)")
+    severity: str = Field(..., description="CRITICAL, HIGH, MEDIUM, or INFO")
+    feature: Optional[str] = Field(default=None, description="Feature that triggered this warning")
+    message: str = Field(..., description="Human-readable explanation of the guardrail violation")
+    original_value: Optional[float] = Field(default=None, description="Raw input value before any capping")
+    capped_value: Optional[float] = Field(default=None, description="Value after winsorization (if applicable)")
+
+
 class ShapExplanation(BaseModel):
     baseline_log_odds: float = Field(..., description="Population baseline log-odds")
     top_risk_drivers: List[TopFeatureContribution] = Field(..., description="Top factors increasing fraud/rejection likelihood")
@@ -144,6 +154,18 @@ class ClaimPredictionResponse(BaseModel):
     prediction: PredictionResult
     explanations: ShapExplanation
     latency_ms: float = Field(..., description="Inference and explanation time in milliseconds")
+    guardrail_warnings: List[GuardrailWarningItem] = Field(
+        default_factory=list,
+        description="Pre-model guardrail violations and OOD warnings. Empty if no issues detected."
+    )
+    ood_warning: bool = Field(
+        default=False,
+        description="True if one or more input features are outside the model's training distribution"
+    )
+    guardrail_override: bool = Field(
+        default=False,
+        description="True if the risk tier was overridden by a business rule (model prediction bypassed)"
+    )
 
 
 class BatchClaimResponse(BaseModel):

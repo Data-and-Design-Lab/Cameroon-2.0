@@ -7,6 +7,17 @@ and administrative reasons for medical auditors and claims adjudicators.
 from typing import Any, Dict, List, Tuple
 from service.schemas import TopFeatureContribution
 
+# Lazy import to avoid circular dependency
+_feature_bounds = None
+
+def _get_feature_bounds():
+    """Lazy-loads FEATURE_BOUNDS to avoid circular imports."""
+    global _feature_bounds
+    if _feature_bounds is None:
+        from service.guardrails import FEATURE_BOUNDS
+        _feature_bounds = FEATURE_BOUNDS
+    return _feature_bounds
+
 FEATURE_META: Dict[str, Dict[str, str]] = {
     "POL_days_to_expiry": {
         "name": "Days to Policy Expiry",
@@ -126,6 +137,53 @@ def _format_value(val: Any) -> Any:
         if isinstance(val, float):
             return round(val, 2)
     return str(val)
+def _is_value_extreme(feat: str, val: Any) -> bool:
+    """
+    Checks if a feature value is far beyond the training distribution.
+    Returns True if the value exceeds the training maximum by 10x or more.
+    """
+    bounds = _get_feature_bounds()
+    if feat not in bounds or val is None:
+        return False
+    try:
+        val_f = float(val)
+    except (ValueError, TypeError):
+        return False
+    return abs(val_f) > bounds[feat].train_max * 10
+
+
+def _get_ood_override_explanation(feat: str, val: Any, direction: str) -> str:
+    """
+    Returns context-aware explanation when a value is far outside training distribution.
+    This overrides the static pos/neg text to prevent misleading explanations.
+    """
+    bounds = _get_feature_bounds()
+    if feat not in bounds:
+        return None
+    try:
+        val_f = float(val)
+    except (ValueError, TypeError):
+        return None
+
+    b = bounds[feat]
+    if abs(val_f) <= b.train_max:
+        return None
+
+    multiplier = abs(val_f) / b.train_max if b.train_max > 0 else float('inf')
+
+    if direction == "neg":  # Model says this DECREASES risk — but value is extreme
+        return (
+            f"WARNING: {b.name} ({val_f:,.0f} {b.unit}) is {multiplier:,.0f}x the training "
+            f"maximum ({b.train_max:,.0f} {b.unit}). The model's assessment is UNRELIABLE "
+            f"for this value — tree-based models cannot extrapolate beyond training data. "
+            f"This feature's SHAP contribution should NOT be trusted."
+        )
+    else:  # Model says this INCREASES risk — still flag as OOD but less contradictory
+        return (
+            f"{b.name} ({val_f:,.0f} {b.unit}) is {multiplier:,.0f}x the training maximum "
+            f"({b.train_max:,.0f} {b.unit}). Value is far outside model's training range."
+        )
+
 
 
 def generate_explanations(
@@ -158,6 +216,11 @@ def generate_explanations(
             "neg": f"Feature '{feat}' reduced claim rejection risk score",
         })
         val = feature_values.get(feat)
+        explanation = meta["pos"]
+        # Override with context-aware explanation if value is extreme OOD
+        ood_override = _get_ood_override_explanation(feat, val, "pos")
+        if ood_override:
+            explanation = ood_override
         top_pos.append(
             TopFeatureContribution(
                 feature=feat,
@@ -165,7 +228,7 @@ def generate_explanations(
                 value=_format_value(val),
                 impact_direction="INCREASES_RISK",
                 shap_importance=round(shap_val, 4),
-                explanation=meta["pos"],
+                explanation=explanation,
             )
         )
         
@@ -177,6 +240,11 @@ def generate_explanations(
             "neg": f"Feature '{feat}' reduced claim rejection risk score",
         })
         val = feature_values.get(feat)
+        explanation = meta["neg"]
+        # Override with context-aware explanation if value is extreme OOD
+        ood_override = _get_ood_override_explanation(feat, val, "neg")
+        if ood_override:
+            explanation = ood_override
         top_neg.append(
             TopFeatureContribution(
                 feature=feat,
@@ -184,7 +252,7 @@ def generate_explanations(
                 value=_format_value(val),
                 impact_direction="DECREASES_RISK",
                 shap_importance=round(shap_val, 4),
-                explanation=meta["neg"],
+                explanation=explanation,
             )
         )
         

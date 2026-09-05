@@ -15,9 +15,16 @@ import pandas as pd
 
 from service.config import settings
 from service.explainer import generate_explanations
+from service.guardrails import (
+    check_claim_plausibility,
+    cap_features,
+    format_guardrail_warnings,
+    GuardrailResult,
+)
 from service.schemas import (
     ClaimInput,
     ClaimPredictionResponse,
+    GuardrailWarningItem,
     HealthResponse,
     PredictionResult,
     ShapExplanation,
@@ -130,12 +137,29 @@ class FraudModelEngine:
     def score_claim(self, claim: ClaimInput) -> ClaimPredictionResponse:
         """
         Scores an individual openIMIS claim and generates detailed TreeSHAP explanations.
+        Includes pre-model guardrail checks and post-model business rule overrides.
         """
         start_t = time.perf_counter()
         
+        # 1. Transform claim into feature dictionary
         row_dict = claim_to_feature_dict(claim)
-        df = build_dataframe([row_dict], self.features, self.cat_features, self.categories)
         
+        # 2. Run pre-model guardrail checks (plausibility, reconciliation, tariffs, eligibility)
+        guardrail = check_claim_plausibility(
+            claimed_amount=float(row_dict.get("CLM_claimed", 0)),
+            cost_per_day=float(row_dict.get("CLM_cost_per_day", 0)),
+            cost_per_line=float(row_dict.get("CLM_cost_per_line", 0)),
+            los=float(row_dict.get("CLM_los", 0)),
+            feature_dict=row_dict,
+            claim=claim,
+        )
+        
+        # 3. Cap extreme features to training-observed bounds for model scoring
+        #    (preserves original values in guardrail warnings for audit trail)
+        scoring_dict = cap_features(row_dict, guardrail)
+        
+        # 4. Build dataframe and run model prediction on capped features
+        df = build_dataframe([scoring_dict], self.features, self.cat_features, self.categories)
         raw_scores, cal_probs, contribs = self.predict_df(df)
         
         raw_score = float(raw_scores[0])
@@ -145,15 +169,36 @@ class FraudModelEngine:
         feature_shap = shap_vector[:-1].tolist()
         baseline_log_odds = float(shap_vector[-1])
         
+        # 5. Generate SHAP explanations using ORIGINAL values (not capped)
+        #    so explanations reflect what was actually submitted
         top_pos, top_neg = generate_explanations(
             feature_names=self.features,
             shap_values=feature_shap,
-            feature_values=row_dict,
+            feature_values=row_dict,  # Original uncapped values for display
             top_k=4,
         )
         
+        # 6. Determine model-based tier
         tier, action, is_flagged = self._determine_tier_and_action(raw_score, cal_prob)
+        
+        # 7. Apply guardrail overrides if triggered (overrides model decision)
+        if guardrail.has_override:
+            logger.warning(
+                f"GUARDRAIL OVERRIDE for claim {claim.claim_id}: "
+                f"Model tier={tier} overridden to {guardrail.override_tier}. "
+                f"Claimed={float(row_dict.get('CLM_claimed', 0)):,.0f} FCFA"
+            )
+            tier = guardrail.override_tier
+            action = guardrail.override_action
+            is_flagged = guardrail.override_flagged if guardrail.override_flagged is not None else True
+        
         elapsed_ms = (time.perf_counter() - start_t) * 1000.0
+        
+        # 8. Format guardrail warnings for API response
+        warning_items = [
+            GuardrailWarningItem(**w)
+            for w in format_guardrail_warnings(guardrail)
+        ]
         
         return ClaimPredictionResponse(
             claim_id=claim.claim_id,
@@ -171,6 +216,9 @@ class FraudModelEngine:
                 top_mitigating_factors=top_neg,
             ),
             latency_ms=round(elapsed_ms, 2),
+            guardrail_warnings=warning_items,
+            ood_warning=guardrail.is_ood,
+            guardrail_override=guardrail.has_override,
         )
 
     def score_raw_features(
