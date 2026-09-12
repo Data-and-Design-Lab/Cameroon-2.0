@@ -10,6 +10,31 @@ interface ClaimFormProps {
   isLoading: boolean;
 }
 
+const REGIONS = [
+  "Centre",
+  "Littoral",
+  "Nord",
+  "Extreme Nord",
+  "Adamaoua",
+  "Ouest",
+  "South West",
+  "North West",
+  "Est",
+  "Sud",
+];
+
+const DX_CHAPTERS: { value: string; label: string }[] = [
+  { value: "A", label: "A — Infectious & parasitic" },
+  { value: "B", label: "B — Other infections" },
+  { value: "G", label: "G — Nervous system" },
+  { value: "J", label: "J — Respiratory system" },
+  { value: "K", label: "K — Digestive system" },
+  { value: "N", label: "N — Genitourinary" },
+  { value: "P", label: "P — Perinatal conditions" },
+  { value: "Q", label: "Q — Congenital malformations" },
+  { value: "UNK", label: "Unknown" },
+];
+
 export default function ClaimForm({
   formData,
   onChange,
@@ -23,6 +48,39 @@ export default function ClaimForm({
     });
   };
 
+  const numberField = (
+    field: keyof ClaimInput,
+    label: string,
+    opts: { step?: string; hint?: string; placeholder?: string } = {}
+  ) => (
+    <div className="field">
+      <label htmlFor={field}>{label}</label>
+      <input
+        id={field}
+        type="number"
+        min="0"
+        step={opts.step ?? "any"}
+        value={(formData[field] as number | undefined) ?? ""}
+        onChange={(e) => updateField(field, parseFloat(e.target.value) || 0)}
+        placeholder={opts.placeholder}
+      />
+      {opts.hint && <span className="field-hint">{opts.hint}</span>}
+    </div>
+  );
+
+  const dateField = (field: keyof ClaimInput, label: string, required = false) => (
+    <div className="field">
+      <label htmlFor={field}>{label}</label>
+      <input
+        id={field}
+        type="date"
+        required={required}
+        value={(formData[field] as string | undefined) || ""}
+        onChange={(e) => updateField(field, e.target.value)}
+      />
+    </div>
+  );
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit();
@@ -30,14 +88,16 @@ export default function ClaimForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* 1. Claim Financials & Timing */}
-      <div className="form-section">
-        <div className="form-section-title">
-          <span>1. Claim Financials & Timing</span>
-        </div>
-        <div className="form-grid-2">
-          <div className="form-group">
-            <label htmlFor="claimed_amount">Claimed Amount (FCFA) *</label>
+      {/* Claim basics */}
+      <fieldset className="fieldset">
+        <legend>Claim</legend>
+        <p className="fieldset-note">
+          Amount billed to the scheme and the period of care it covers.
+        </p>
+
+        <div className="field-grid">
+          <div className="field">
+            <label htmlFor="claimed_amount">Claimed amount (FCFA)</label>
             <input
               id="claimed_amount"
               type="number"
@@ -45,273 +105,253 @@ export default function ClaimForm({
               step="100"
               required
               value={formData.claimed_amount || ""}
-              onChange={(e) => updateField("claimed_amount", parseFloat(e.target.value) || 0)}
-              placeholder="e.g. 15000"
+              onChange={(e) =>
+                updateField("claimed_amount", parseFloat(e.target.value) || 0)
+              }
+              placeholder="15000"
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="claim_id">Claim Tracking ID (Optional)</label>
+          <div className="field">
+            <label htmlFor="claim_id">Claim reference</label>
             <input
               id="claim_id"
               type="text"
               value={formData.claim_id || ""}
               onChange={(e) => updateField("claim_id", e.target.value)}
-              placeholder="e.g. CLM-2026-001"
+              placeholder="CLM-2026-001"
             />
           </div>
-        </div>
 
-        <div className="form-grid-3" style={{ marginTop: "0.85rem" }}>
-          <div className="form-group">
-            <label htmlFor="date_from">Service Start (DateFrom) *</label>
-            <input
-              id="date_from"
-              type="date"
-              required
-              value={formData.date_from || ""}
-              onChange={(e) => updateField("date_from", e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="date_to">Service End (DateTo) *</label>
-            <input
-              id="date_to"
-              type="date"
-              required
-              value={formData.date_to || ""}
-              onChange={(e) => updateField("date_to", e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="date_claimed">Submission Date</label>
-            <input
-              id="date_claimed"
-              type="date"
-              value={formData.date_claimed || ""}
-              onChange={(e) => updateField("date_claimed", e.target.value)}
-            />
-          </div>
-        </div>
+          {dateField("date_from", "Service start", true)}
+          {dateField("date_to", "Service end", true)}
+          {dateField("date_claimed", "Submitted on")}
 
-        <div className="form-grid-3" style={{ marginTop: "0.85rem" }}>
-          <div className="form-group">
-            <label htmlFor="care_type">Care Setting</label>
+          <div className="field">
+            <label htmlFor="care_type">Care setting</label>
             <select
               id="care_type"
               value={formData.care_type}
               onChange={(e) => updateField("care_type", e.target.value)}
             >
-              <option value="OPD">OPD (Outpatient)</option>
-              <option value="IPD">IPD (Inpatient)</option>
-              <option value="UNK">Unknown / Other</option>
+              <option value="OPD">Outpatient</option>
+              <option value="IPD">Inpatient</option>
+              <option value="UNK">Unknown</option>
             </select>
           </div>
-          <div className="form-group">
-            <label htmlFor="visit_type">Visit Urgency</label>
+          <div className="field">
+            <label htmlFor="visit_type">Visit type</label>
             <select
               id="visit_type"
               value={formData.visit_type}
               onChange={(e) => updateField("visit_type", e.target.value)}
             >
-              <option value="O">Ordinary (Routine)</option>
+              <option value="O">Ordinary</option>
               <option value="E">Emergency</option>
               <option value="R">Referral</option>
               <option value="UNK">Unknown</option>
             </select>
           </div>
-          <div className="form-group" style={{ justifyContent: "center" }}>
-            <label className="checkbox-group" htmlFor="has_explanation">
-              <input
-                id="has_explanation"
-                type="checkbox"
-                checked={Boolean(formData.has_explanation)}
-                onChange={(e) => updateField("has_explanation", e.target.checked)}
-              />
-              <span>Written Justification Attached</span>
-            </label>
-          </div>
+          <label className="switch-field" htmlFor="has_explanation">
+            <input
+              id="has_explanation"
+              type="checkbox"
+              checked={Boolean(formData.has_explanation)}
+              onChange={(e) => updateField("has_explanation", e.target.checked)}
+            />
+            <span>Justification attached</span>
+          </label>
         </div>
-      </div>
+      </fieldset>
 
-      {/* 2. Services & Tariffs */}
-      <div className="form-section">
-        <div className="form-section-title">
-          <span>2. Services & Fee Tariffs</span>
-        </div>
-        <div className="form-grid-2">
-          <div className="form-group">
-            <label htmlFor="service_lines_count">Service Lines Count</label>
-            <input
-              id="service_lines_count"
-              type="number"
-              min="0"
-              value={formData.service_lines_count ?? 1}
-              onChange={(e) => updateField("service_lines_count", parseInt(e.target.value, 10) || 0)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="service_tariff_total">Official Tariff Schedule Total (FCFA)</label>
-            <input
-              id="service_tariff_total"
-              type="number"
-              min="0"
-              value={formData.service_tariff_total ?? ""}
-              onChange={(e) => updateField("service_tariff_total", parseFloat(e.target.value) || 0)}
-              placeholder="Expected catalogue price"
-            />
-          </div>
-        </div>
+      {/* Services and tariffs */}
+      <fieldset className="fieldset">
+        <legend>Services &amp; tariffs</legend>
+        <p className="fieldset-note">
+          Billed totals against the official fee schedule. Gaps here drive most
+          rejections.
+        </p>
 
-        <div className="form-grid-2" style={{ marginTop: "0.85rem" }}>
-          <div className="form-group">
-            <label htmlFor="service_asked_total">Total Billed Across Services (FCFA)</label>
-            <input
-              id="service_asked_total"
-              type="number"
-              min="0"
-              value={formData.service_asked_total ?? ""}
-              onChange={(e) => updateField("service_asked_total", parseFloat(e.target.value) || 0)}
-              placeholder="Sum of service items"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="service_tariff_breaches">Tariff Limit Breaches</label>
-            <input
-              id="service_tariff_breaches"
-              type="number"
-              min="0"
-              value={formData.service_tariff_breaches ?? 0}
-              onChange={(e) => updateField("service_tariff_breaches", parseInt(e.target.value, 10) || 0)}
-              placeholder="Lines exceeding statutory limit"
-            />
-          </div>
+        <div className="field-grid">
+          {numberField("service_lines_count", "Service lines", { step: "1" })}
+          {numberField("service_tariff_total", "Tariff total (FCFA)", {
+            placeholder: "Catalogue price",
+          })}
+          {numberField("service_asked_total", "Billed total (FCFA)", {
+            placeholder: "Sum of lines",
+          })}
+          {numberField("service_tariff_breaches", "Tariff breaches", {
+            step: "1",
+            hint: "Lines above the statutory limit.",
+          })}
         </div>
-      </div>
+      </fieldset>
 
-      {/* 3. Insurance Policy (Point-in-Time) */}
-      <div className="form-section">
-        <div className="form-section-title">
-          <span>3. Insurance Policy (Point-in-Time Validity)</span>
-        </div>
-        <div className="form-grid-3">
-          <div className="form-group">
-            <label htmlFor="policy_start_date">Policy Start Date</label>
-            <input
-              id="policy_start_date"
-              type="date"
-              value={formData.policy_start_date || ""}
-              onChange={(e) => updateField("policy_start_date", e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="policy_expiry_date">Policy Expiry Date</label>
-            <input
-              id="policy_expiry_date"
-              type="date"
-              value={formData.policy_expiry_date || ""}
-              onChange={(e) => updateField("policy_expiry_date", e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="policy_enrollment_date">Enrollment Date</label>
-            <input
-              id="policy_enrollment_date"
-              type="date"
-              value={formData.policy_enrollment_date || ""}
-              onChange={(e) => updateField("policy_enrollment_date", e.target.value)}
-            />
-          </div>
-        </div>
-      </div>
+      {/* Policy */}
+      <fieldset className="fieldset">
+        <legend>Policy validity</legend>
+        <p className="fieldset-note">
+          Cover is checked as at the service date, not at submission.
+        </p>
 
-      {/* 4. Provider & Diagnosis */}
-      <div className="form-section">
-        <div className="form-section-title">
-          <span>4. Provider Facility & Diagnosis</span>
+        <div className="field-grid">
+          {dateField("policy_start_date", "Policy start")}
+          {dateField("policy_expiry_date", "Policy expiry")}
+          {dateField("policy_enrollment_date", "Enrolment")}
         </div>
-        <div className="form-grid-3">
-          <div className="form-group">
-            <label htmlFor="hfid">Health Facility ID</label>
+      </fieldset>
+
+      {/* Provider and diagnosis */}
+      <fieldset className="fieldset">
+        <legend>Provider &amp; diagnosis</legend>
+        <p className="fieldset-note">
+          Facility identity and the primary coded diagnosis.
+        </p>
+
+        <div className="field-grid">
+          <div className="field">
+            <label htmlFor="hfid">Facility ID</label>
             <input
               id="hfid"
               type="number"
               value={formData.hfid ?? 404}
-              onChange={(e) => updateField("hfid", parseInt(e.target.value, 10) || 404)}
+              onChange={(e) =>
+                updateField("hfid", parseInt(e.target.value, 10) || 404)
+              }
             />
           </div>
-          <div className="form-group">
+          <div className="field">
             <label htmlFor="geo_region">Region</label>
             <select
               id="geo_region"
               value={formData.geo_region}
               onChange={(e) => updateField("geo_region", e.target.value)}
             >
-              <option value="Centre">Centre</option>
-              <option value="Littoral">Littoral</option>
-              <option value="Nord">Nord</option>
-              <option value="Extreme Nord">Extreme Nord</option>
-              <option value="Adamaoua">Adamaoua</option>
-              <option value="Ouest">Ouest</option>
-              <option value="South West">South West</option>
-              <option value="North West">North West</option>
-              <option value="Est">Est</option>
-              <option value="Sud">Sud</option>
+              {REGIONS.map((region) => (
+                <option key={region} value={region}>
+                  {region}
+                </option>
+              ))}
             </select>
           </div>
-          <div className="form-group">
-            <label htmlFor="geo_district">Health District</label>
+          <div className="field">
+            <label htmlFor="geo_district">Health district</label>
             <input
               id="geo_district"
               type="text"
-              value={formData.geo_district || "Guider"}
+              value={formData.geo_district || ""}
               onChange={(e) => updateField("geo_district", e.target.value)}
+              placeholder="Guider"
             />
           </div>
-        </div>
-
-        <div className="form-grid-2" style={{ marginTop: "0.85rem" }}>
-          <div className="form-group">
-            <label htmlFor="icdid">Primary ICD Diagnosis ID</label>
+          <div className="field">
+            <label htmlFor="icdid">Primary ICD code ID</label>
             <input
               id="icdid"
               type="number"
               value={formData.icdid ?? 1931}
-              onChange={(e) => updateField("icdid", parseInt(e.target.value, 10) || 1931)}
+              onChange={(e) =>
+                updateField("icdid", parseInt(e.target.value, 10) || 1931)
+              }
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="dx_chapter">ICD-10 Chapter Letter</label>
+          <div className="field span-2">
+            <label htmlFor="dx_chapter">ICD-10 chapter</label>
             <select
               id="dx_chapter"
               value={formData.dx_chapter || "J"}
               onChange={(e) => updateField("dx_chapter", e.target.value)}
             >
-              <option value="A">A - Infectious & Parasitic</option>
-              <option value="B">B - Other Infections</option>
-              <option value="J">J - Respiratory System</option>
-              <option value="K">K - Digestive System</option>
-              <option value="Q">Q - Congenital Malformations</option>
-              <option value="G">G - Nervous System</option>
-              <option value="N">N - Genitourinary</option>
-              <option value="P">P - Perinatal Conditions</option>
-              <option value="UNK">UNK - Unknown</option>
+              {DX_CHAPTERS.map((chapter) => (
+                <option key={chapter.value} value={chapter.value}>
+                  {chapter.label}
+                </option>
+              ))}
             </select>
           </div>
         </div>
-      </div>
+      </fieldset>
 
-      <button type="submit" className="submit-btn" disabled={isLoading}>
-        {isLoading ? (
-          <>
-            <span className="spinner" />
-            <span>Evaluating Claim with LightGBM & TreeSHAP...</span>
-          </>
-        ) : (
-          <>
-            <span>Verify Claim for Fraud Risk</span>
-          </>
-        )}
-      </button>
+      {/* Advanced */}
+      <details className="disclosure">
+        <summary>
+          Advanced model inputs
+          <span className="eyebrow">Optional</span>
+        </summary>
+
+        <div className="disclosure-body">
+          <p className="fieldset-note">
+            Derived service and item aggregates. Leave as loaded unless you are
+            reproducing a specific claim.
+          </p>
+
+          <div className="field-grid">
+            <div className="field">
+              <label htmlFor="hf_level">Facility level</label>
+              <select
+                id="hf_level"
+                value={formData.hf_level || "H"}
+                onChange={(e) => updateField("hf_level", e.target.value)}
+              >
+                <option value="D">Dispensary</option>
+                <option value="C">Health centre</option>
+                <option value="H">Hospital</option>
+              </select>
+            </div>
+            <div className="field">
+              <label htmlFor="hf_caretype">Facility care type</label>
+              <select
+                id="hf_caretype"
+                value={formData.hf_caretype || "B"}
+                onChange={(e) => updateField("hf_caretype", e.target.value)}
+              >
+                <option value="O">Outpatient only</option>
+                <option value="I">Inpatient only</option>
+                <option value="B">Both</option>
+              </select>
+            </div>
+            <div className="field">
+              <label htmlFor="hf_legalform">Legal form</label>
+              <select
+                id="hf_legalform"
+                value={formData.hf_legalform || "G"}
+                onChange={(e) => updateField("hf_legalform", e.target.value)}
+              >
+                <option value="G">Government</option>
+                <option value="D">District organisation</option>
+                <option value="P">Private</option>
+                <option value="C">Charity</option>
+              </select>
+            </div>
+
+            {numberField("service_asked_mean", "Mean billed per line")}
+            {numberField("service_asked_max", "Largest billed line")}
+            {numberField("service_n_distinct", "Distinct services", { step: "1" })}
+            {numberField("service_tariff_ratio_max", "Max billed / tariff", {
+              step: "0.01",
+            })}
+            {numberField("service_tariff_ratio_mean", "Mean billed / tariff", {
+              step: "0.01",
+            })}
+            {numberField("service_repeat_rate", "Repeat rate", { step: "0.01" })}
+            {numberField("service_top_line_share", "Top line share", {
+              step: "0.01",
+            })}
+            {numberField("item_lines_count", "Item lines", { step: "1" })}
+            {numberField("item_asked_total", "Items billed (FCFA)")}
+          </div>
+        </div>
+      </details>
+
+      <div className="form-footer">
+        <button type="submit" className="btn btn-primary" disabled={isLoading}>
+          {isLoading && <span className="spinner" />}
+          <span>{isLoading ? "Scoring claim" : "Run risk check"}</span>
+        </button>
+        <p className="caption">
+          Scored against the calibrated LightGBM model, with TreeSHAP attributions
+          for each factor.
+        </p>
+      </div>
     </form>
   );
 }

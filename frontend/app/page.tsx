@@ -88,61 +88,69 @@ export default function Home() {
 
   return (
     <main className="app-container">
-      {/* Top Bar */}
       <Header apiUrl="/api/proxy" />
 
-      {/* Preset Scenarios */}
-      <Presets
-        onSelectPreset={handleSelectPreset}
-        onAutoSubmit={handleAutoSubmit}
-      />
-
-      {/* Main Dashboard */}
       <div className="dashboard-grid">
-        {/* Left: Input */}
-        <div className="glass-panel">
-          <div className="tabs-nav">
-            <button
-              type="button"
-              className={`tab-btn ${activeTab === "form" ? "active" : ""}`}
-              onClick={() => setActiveTab("form")}
-            >
-              Claim Input Form
-            </button>
-            <button
-              type="button"
-              className={`tab-btn ${activeTab === "json" ? "active" : ""}`}
-              onClick={() => setActiveTab("json")}
-            >
-              Paste / Upload JSON
-            </button>
+        {/* Left: claim input */}
+        <section className="panel">
+          <div className="panel-head">
+            <div>
+              <div className="panel-title">Claim details</div>
+              <div className="panel-note">
+                {activeTab === "form"
+                  ? "Enter the claim as submitted by the facility."
+                  : "Send a raw openIMIS claim payload."}
+              </div>
+            </div>
+
+            <div className="segmented" role="tablist" aria-label="Input method">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === "form"}
+                onClick={() => setActiveTab("form")}
+              >
+                Form
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === "json"}
+                onClick={() => setActiveTab("json")}
+              >
+                JSON
+              </button>
+            </div>
           </div>
 
-          {activeTab === "form" ? (
-            <ClaimForm
-              formData={formData}
-              onChange={setFormData}
-              onSubmit={() => executePrediction(formData)}
-              isLoading={isLoading}
-            />
-          ) : (
-            <JsonUploader
-              initialJson={formData}
-              onSubmitJson={(parsedClaim) => {
-                setFormData(parsedClaim);
-                executePrediction(parsedClaim);
-              }}
-              isLoading={isLoading}
-            />
-          )}
-        </div>
+          <Presets
+            onSelectPreset={handleSelectPreset}
+            onAutoSubmit={handleAutoSubmit}
+          />
 
-        {/* Right: Results */}
-        <ResultsDashboard
-          result={result}
-          isLoading={isLoading}
-          error={error}
-        />
+          <div className="panel-body">
+            {activeTab === "form" ? (
+              <ClaimForm
+                formData={formData}
+                onChange={setFormData}
+                onSubmit={() => executePrediction(formData)}
+                isLoading={isLoading}
+              />
+            ) : (
+              <JsonUploader
+                initialJson={formData}
+                onSubmitJson={(parsedClaim) => {
+                  setFormData(parsedClaim);
+                  executePrediction(parsedClaim);
+                }}
+                isLoading={isLoading}
+              />
+            )}
+          </div>
+        </section>
+
+        {/* Right: triage result */}
+        <ResultsDashboard result={result} isLoading={isLoading} error={error} />
       </div>
     </main>
   );

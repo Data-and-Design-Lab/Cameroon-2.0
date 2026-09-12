@@ -19,6 +19,7 @@ export default function JsonUploader({
   );
   const [parseError, setParseError] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
+  const [fileName, setFileName] = useState<string | null>(null);
 
   // Sync if initialJson changes from presets
   React.useEffect(() => {
@@ -33,7 +34,7 @@ export default function JsonUploader({
       JSON.parse(val);
       setParseError(null);
     } catch (err: any) {
-      setParseError(`JSON Syntax Error: ${err.message}`);
+      setParseError(err.message);
     }
   };
 
@@ -44,9 +45,11 @@ export default function JsonUploader({
         const text = e.target?.result as string;
         const parsed = JSON.parse(text);
         setJsonString(JSON.stringify(parsed, null, 2));
+        setFileName(file.name);
         setParseError(null);
       } catch (err: any) {
-        setParseError(`Failed to parse file as JSON: ${err.message}`);
+        setFileName(file.name);
+        setParseError(`Could not read ${file.name} as JSON — ${err.message}`);
       }
     };
     reader.readAsText(file);
@@ -59,14 +62,15 @@ export default function JsonUploader({
       setParseError(null);
       onSubmitJson(parsed);
     } catch (err: any) {
-      setParseError(`Invalid JSON format: ${err.message}`);
+      setParseError(err.message);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div
-        className={`json-dropzone ${isDragOver ? "drag-active" : ""}`}
+      <button
+        type="button"
+        className={`dropzone ${isDragOver ? "is-active" : ""}`}
         onDragOver={(e) => {
           e.preventDefault();
           setIsDragOver(true);
@@ -81,94 +85,73 @@ export default function JsonUploader({
         }}
         onClick={() => document.getElementById("file-input")?.click()}
       >
-        <input
-          id="file-input"
-          type="file"
-          accept=".json,application/json"
-          style={{ display: "none" }}
-          onChange={(e) => {
-            if (e.target.files && e.target.files[0]) {
-              handleFileDrop(e.target.files[0]);
+        <strong>
+          {fileName ? `Loaded ${fileName}` : "Drop a claim JSON file here"}
+        </strong>
+        <span>or click to choose a file from your computer</span>
+      </button>
+
+      <input
+        id="file-input"
+        type="file"
+        accept=".json,application/json"
+        hidden
+        onChange={(e) => {
+          if (e.target.files && e.target.files[0]) {
+            handleFileDrop(e.target.files[0]);
+          }
+        }}
+      />
+
+      <div className="editor-head">
+        <label htmlFor="json-editor" className="eyebrow">
+          Claim payload
+        </label>
+        <button
+          type="button"
+          className="btn btn-quiet"
+          onClick={() => {
+            try {
+              setJsonString(JSON.stringify(JSON.parse(jsonString), null, 2));
+              setParseError(null);
+            } catch {
+              /* keep the user's text as-is when it cannot be parsed */
             }
           }}
-        />
-        <div style={{ fontSize: "1.2rem", marginBottom: "0.5rem", fontWeight: 700, color: "var(--text-dim)" }}>JSON</div>
-        <p style={{ fontWeight: 600, fontSize: "0.95rem" }}>
-          Drag & Drop an openIMIS Claim JSON file here
-        </p>
-        <p style={{ fontSize: "0.8rem", color: "var(--text-muted)", marginTop: "0.25rem" }}>
-          or click to browse your computer
-        </p>
-      </div>
-
-      <div className="form-group" style={{ marginBottom: "1rem" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "0.35rem",
-          }}
         >
-          <label htmlFor="json-editor">Raw JSON Payload Editor</label>
-          <button
-            type="button"
-            className="preset-btn"
-            style={{ padding: "0.2rem 0.6rem", fontSize: "0.75rem" }}
-            onClick={() => {
-              try {
-                const parsed = JSON.parse(jsonString);
-                setJsonString(JSON.stringify(parsed, null, 2));
-                setParseError(null);
-              } catch {}
-            }}
-          >
-            Format JSON
-          </button>
-        </div>
-
-        <textarea
-          id="json-editor"
-          className="json-textarea"
-          value={jsonString}
-          onChange={handleTextChange}
-          placeholder="Paste openIMIS claim JSON here..."
-          spellCheck={false}
-        />
+          Reformat
+        </button>
       </div>
+
+      <textarea
+        id="json-editor"
+        className="code-area"
+        value={jsonString}
+        onChange={handleTextChange}
+        placeholder="Paste an openIMIS claim payload"
+        spellCheck={false}
+      />
 
       {parseError && (
-        <div
-          style={{
-            background: "rgba(239, 68, 68, 0.15)",
-            border: "1px solid rgba(239, 68, 68, 0.4)",
-            borderRadius: "8px",
-            padding: "0.75rem 1rem",
-            color: "#fca5a5",
-            fontSize: "0.85rem",
-            marginBottom: "1rem",
-          }}
-        >
+        <div className="notice alert">
+          <strong>Invalid JSON</strong>
           {parseError}
         </div>
       )}
 
-      <button
-        type="submit"
-        className="submit-btn"
-        disabled={isLoading || Boolean(parseError)}
-      >
-        {isLoading ? (
-          <>
-            <span className="spinner" />
-            <span>Posting JSON to Fraud Microservice...</span>
-          </>
-        ) : (
-          <>
-            <span>Verify Uploaded Claim JSON</span>
-          </>
-        )}
-      </button>
+      <div className="form-footer">
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={isLoading || Boolean(parseError)}
+        >
+          {isLoading && <span className="spinner" />}
+          <span>{isLoading ? "Scoring claim" : "Run risk check"}</span>
+        </button>
+        <p className="caption">
+          The payload is sent to the scoring service exactly as shown above.
+        </p>
+      </div>
     </form>
   );
 }

@@ -61,49 +61,42 @@ export default function Header({ apiUrl }: HeaderProps) {
   }, [apiUrl]);
 
   return (
-    <header className="header-card">
-      <div className="brand-section">
-        <div className="brand-icon" aria-hidden="true">
-          FV
-        </div>
-        <div>
-          <h1 className="brand-title">openIMIS Claim Fraud Verifier</h1>
-          <p className="brand-subtitle">
-            LightGBM Microservice (Leakage-Free GBDT) • Real-Time TreeSHAP Triage
-          </p>
-        </div>
+    <header className="masthead">
+      <div>
+        <h1>Claim Fraud &amp; Rejection Review</h1>
+        <p>openIMIS claim triage — LightGBM scoring with TreeSHAP explanations</p>
       </div>
 
-      <div className="header-status">
-        <div className={`status-badge ${isOnline ? "online" : "offline"}`}>
-          <span className="status-dot" />
-          <span>{isOnline ? "Backend Connected (127.0.0.1:8000)" : "Backend Offline"}</span>
-        </div>
-
+      <div className="masthead-meta">
         {health && (
-          <div
-            style={{
-              fontSize: "0.78rem",
-              color: "var(--text-dim)",
-              background: "#f1f5f9",
-              padding: "0.35rem 0.75rem",
-              borderRadius: "6px",
-              fontFamily: "'JetBrains Mono', monospace",
-            }}
-          >
-            ROC-AUC: <strong>{health.roc_auc_test.toFixed(4)}</strong> | Threshold:{" "}
-            <strong>{(health.decision_threshold * 100).toFixed(1)}%</strong>
+          <div className="metric-inline">
+            <div>
+              <span className="eyebrow">ROC-AUC</span>
+              <b>{health.roc_auc_test.toFixed(3)}</b>
+            </div>
+            <div>
+              <span className="eyebrow">Alert cutoff</span>
+              <b>{(health.decision_threshold * 100).toFixed(1)}%</b>
+            </div>
+            <div>
+              <span className="eyebrow">Features</span>
+              <b>{health.num_features}</b>
+            </div>
           </div>
         )}
+
+        <div className={`status-line ${isOnline ? "" : "offline"}`}>
+          <span className="status-dot" />
+          <span>{isOnline ? "Service online" : "Service offline"}</span>
+        </div>
 
         <a
           href="http://127.0.0.1:8000/docs"
           target="_blank"
           rel="noopener noreferrer"
-          className="preset-btn"
-          style={{ textDecoration: "none" }}
+          className="btn"
         >
-          API Docs
+          API reference
         </a>
       </div>
     </header>

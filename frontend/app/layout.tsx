@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "openIMIS Healthcare Claim Fraud & Rejection AI Dashboard",
+  title: "Claim Fraud & Rejection Review",
   description:
-    "Real-time fraud verification and TreeSHAP explainability microservice interface for openIMIS healthcare claims.",
+    "openIMIS claim triage — LightGBM risk scoring with TreeSHAP explanations for each decision.",
 };
 
 export default function RootLayout({

@@ -1,72 +1,93 @@
 "use client";
 
 import React from "react";
-import { ShapExplanation } from "../types";
+import { ShapExplanation, TopFeatureContribution } from "../types";
 
 interface ShapExplainerProps {
   explanations: ShapExplanation;
 }
 
+function FactorList({
+  items,
+  direction,
+  scale,
+  emptyNote,
+}: {
+  items: TopFeatureContribution[];
+  direction: "up" | "down";
+  scale: number;
+  emptyNote: string;
+}) {
+  if (items.length === 0) {
+    return <p className="empty-note">{emptyNote}</p>;
+  }
+
+  return (
+    <div>
+      {items.map((item, idx) => {
+        const magnitude = Math.abs(item.shap_importance);
+        const width = scale > 0 ? Math.max(3, (magnitude / scale) * 100) : 0;
+
+        return (
+          <div className="factor" key={`${item.feature}-${idx}`}>
+            <span className="factor-name">{item.display_name}</span>
+            <span className="factor-bar-track">
+              <span
+                className={`factor-bar-fill ${direction}`}
+                style={{ width: `${width}%` }}
+              />
+            </span>
+            <span className="factor-weight">
+              {direction === "up" ? "+" : "−"}
+              {magnitude.toFixed(2)}
+            </span>
+            <p className="factor-why">{item.explanation}</p>
+            <span className="factor-value">{item.value}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function ShapExplainer({ explanations }: ShapExplainerProps) {
   const { top_risk_drivers, top_mitigating_factors } = explanations;
 
+  // Share one bar scale across both lists so magnitudes stay comparable.
+  const scale = Math.max(
+    ...[...top_risk_drivers, ...top_mitigating_factors].map((item) =>
+      Math.abs(item.shap_importance)
+    ),
+    0
+  );
+
   return (
-    <div className="shap-section">
-      {/* Risk Drivers */}
-      <div className="shap-title" style={{ color: "#f87171" }}>
-        <span>Top Contributing Risk Drivers (Why it was flagged)</span>
+    <div className="explain">
+      <div className="explain-group">
+        <div className="explain-head">
+          <h4>What raised the score</h4>
+          <span className="eyebrow">SHAP weight</span>
+        </div>
+        <FactorList
+          items={top_risk_drivers}
+          direction="up"
+          scale={scale}
+          emptyNote="No factor pushed this claim towards rejection."
+        />
       </div>
 
-      {top_risk_drivers.length > 0 ? (
-        <div className="shap-list">
-          {top_risk_drivers.map((item, idx) => (
-            <div key={idx} className="shap-card risk">
-              <div className="shap-info">
-                <span className="shap-name">{item.display_name}</span>
-                <span className="shap-rationale">{item.explanation}</span>
-              </div>
-              <div className="shap-stats">
-                <span className="shap-impact positive">
-                  +{item.shap_importance.toFixed(2)} SHAP
-                </span>
-                <span className="shap-val">Value: {item.value}</span>
-              </div>
-            </div>
-          ))}
+      <div className="explain-group">
+        <div className="explain-head">
+          <h4>What lowered the score</h4>
+          <span className="eyebrow">SHAP weight</span>
         </div>
-      ) : (
-        <p style={{ color: "var(--text-muted)", fontSize: "0.85rem", marginBottom: "1.5rem" }}>
-          No significant positive risk drivers identified.
-        </p>
-      )}
-
-      {/* Mitigating Factors */}
-      <div className="shap-title" style={{ color: "#34d399" }}>
-        <span>Top Mitigating Factors (Evidence supporting claim validity)</span>
+        <FactorList
+          items={top_mitigating_factors}
+          direction="down"
+          scale={scale}
+          emptyNote="No mitigating evidence was found for this claim."
+        />
       </div>
-
-      {top_mitigating_factors.length > 0 ? (
-        <div className="shap-list">
-          {top_mitigating_factors.map((item, idx) => (
-            <div key={idx} className="shap-card mitigating">
-              <div className="shap-info">
-                <span className="shap-name">{item.display_name}</span>
-                <span className="shap-rationale">{item.explanation}</span>
-              </div>
-              <div className="shap-stats">
-                <span className="shap-impact negative">
-                  {item.shap_importance.toFixed(2)} SHAP
-                </span>
-                <span className="shap-val">Value: {item.value}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
-          No substantial mitigating factors were found for this claim.
-        </p>
-      )}
     </div>
   );
 }
