@@ -23,10 +23,20 @@ torch.manual_seed(SEED)
 sns.set_theme(style="whitegrid")
 plt.rcParams.update({'font.sans-serif': 'DejaVu Sans', 'font.family': 'sans-serif'})
 
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+# Walk up from this file until the repository root (the directory holding both
+# `data/` and `models/`) is found, so the script does not care how deeply
+# microservice/backend/scripts/ is nested.
+_here = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = _here
+while not (os.path.isdir(os.path.join(ROOT_DIR, "models")) and os.path.isdir(os.path.join(ROOT_DIR, "data"))):
+    _parent = os.path.dirname(ROOT_DIR)
+    if _parent == ROOT_DIR:
+        ROOT_DIR = os.path.abspath(os.path.join(_here, "..", "..", ".."))
+        break
+    ROOT_DIR = _parent
 data_dir = os.path.join(ROOT_DIR, "data")
-model_dir = os.path.join(ROOT_DIR, "model")
-img_dir = os.path.join(ROOT_DIR, "reports", "figures")
+model_dir = os.path.join(ROOT_DIR, "models", "model_autoencoder")
+img_dir = os.path.join(ROOT_DIR, "figures", "autoencoder")
 os.makedirs(img_dir, exist_ok=True)
 
 # 1. Load Model Config and Scaler
@@ -220,7 +230,7 @@ axes[1, 1].set_ylabel("Precision")
 axes[1, 1].legend(loc='upper right', frameon=True)
 
 plt.tight_layout()
-fig_dist_path = os.path.join(img_dir, "fig1_reconstruction_distributions_and_curves.png")
+fig_dist_path = os.path.join(img_dir, "reconstruction_distributions.png")
 plt.savefig(fig_dist_path, dpi=300, bbox_inches='tight')
 plt.close()
 print(f"Saved Figure 1 to: {fig_dist_path}")
@@ -300,7 +310,7 @@ axes[2, 2].scatter(umap_2d[:, 0], umap_2d[:, 1], c=c_list_code, alpha=0.5, s=12)
 axes[2, 2].set_title("UMAP: Rejection Code Substructures", fontweight='bold')
 
 plt.tight_layout()
-fig_latent_path = os.path.join(img_dir, "fig2_latent_space_pca_tsne_umap.png")
+fig_latent_path = os.path.join(img_dir, "latent_space_projections.png")
 plt.savefig(fig_latent_path, dpi=300, bbox_inches='tight')
 plt.close()
 print(f"Saved Figure 2 to: {fig_latent_path}")

@@ -1,182 +1,236 @@
-# Cameroon Healthcare Claim Fraud & Rejection Detection (Cameroon 2.0)
+# Cameroon openIMIS — Claim Fraud & Rejection Detection
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-microservice-009688.svg)](https://fastapi.tiangolo.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-000000.svg)](https://nextjs.org/)
 [![LightGBM](https://img.shields.io/badge/LightGBM-4.0+-brightgreen.svg)](https://lightgbm.readthedocs.io/)
 [![Platform](https://img.shields.io/badge/Platform-openIMIS-007ACC.svg)](https://openimis.org/)
-[![Organization](https://img.shields.io/badge/Lab-Data%20and%20Design%20Lab-orange.svg)](https://github.com/Data-and-Design-Lab)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Production-grade machine learning, deep learning, and unsupervised anomaly detection framework for healthcare claims adjudication, fraud detection, and rejection risk prediction across the Cameroon **openIMIS** insurance database (**14,242,741 claim transactions**, **15.77M itemized services**).
+Machine learning research and a deployable scoring service for healthcare claim adjudication on the
+Cameroon **openIMIS** database (14,242,741 claim transactions, 15.77M itemized services).
+
+The repository holds three things that fit together:
+
+1. **Research** — six notebooks benchmarking supervised and unsupervised detectors, each with a
+   model card, a DOCX technical report, and the figures behind it.
+2. **A scoring microservice** — FastAPI, serving the leakage-free LightGBM model with calibrated
+   probabilities and exact TreeSHAP attributions per claim.
+3. **A reviewer interface** — a Next.js page where an adjudicator enters or pastes a claim and reads
+   back the risk score, the recommended action, and the factors that drove it.
 
 Developed by the **Data and Design Lab**.
 
----
-
-## 📌 Executive Summary
-
-Healthcare reimbursement systems in developing economies frequently suffer from administrative delays, billing inconsistencies, unbundling, and potential fraudulent activity. This repository houses an end-to-end analytical and machine learning framework that evaluates over 14 million openIMIS claims to:
-
-1. **Detect Fraud & Anomalous Claims Unsupervised**: Using deep bottleneck Autoencoders and robust non-parametric statistical density estimators (ECOD, COPOD, Isolation Forest, HDBSCAN).
-2. **Predict Claim Rejection Pre-Adjudication**: Using calibrated LightGBM gradient boosted decision trees with isotonic regression to guide adjudication workflows.
-3. **Audit High-Risk Providers & Facilities**: Providing multi-level facility drift analysis, target-encoded risk metrics, and line-item financial variance analysis.
-4. **Generate Exhaustive Technical Reports**: Automated generation of professional DOCX reports detailing schema quality, statistical data dictionary, and multi-model benchmark results.
+> **What the models actually predict.** The training label is **claim rejection, not fraud**. Most
+> openIMIS rejections are deterministic eligibility rules the submission-time engine already
+> enforces; the models are audit-queue triage aids, not fraud verdicts. Every score is advisory and
+> every decision stays with a human reviewer. See each model card for the per-code analysis.
 
 ---
 
-## 🏗️ Repository Architecture
+## Repository layout
 
 ```text
-Cameroon-2.0/
-├── data/                               # Dataset directory (raw CSVs gitignored)
-│   ├── README.md                       # Data dictionary & CSV layout instructions
-│   └── .gitkeep
-├── figures/                            # High-resolution evaluation charts & plots
-│   ├── autoencoder.png
-│   ├── lightgbgm reliability.png
-│   └── lightgbm output.png
-├── model/                              # PyTorch Deep Autoencoder artifacts
-│   ├── MODEL_CARD.md                   # Model architecture, training & metric card
-│   ├── autoencoder_best.pth            # Trained PyTorch model weights
-│   ├── autoencoder_config.json         # Optimal thresholds, parameters & features
-│   ├── encoders.pkl                    # Preprocessing & categorical encoders
-│   └── scaler.pkl                      # Fitted StandardScaler
-├── model_ecod/                         # ECOD (Empirical Cumulative Distribution) artifacts
-│   ├── MODEL_CARD.md
-│   ├── ecod_config.json
-│   ├── ecod_reference.npz              # Empirical reference distributions
-│   ├── encoders.pkl
-│   └── scaler.pkl
-├── model_iforest/                      # Isolation Forest outlier detection artifacts
-│   ├── MODEL_CARD.md
-│   ├── isolation_forest.pkl            # Serialized tree ensemble
-│   ├── isolation_forest_config.json
-│   ├── encoders.pkl
-│   └── scaler.pkl
-├── model_lightgbm/                     # LightGBM rejection predictor artifacts
-│   ├── MODEL_CARD.md
-│   ├── lightgbm_model.txt              # Calibrated LightGBM model
-│   ├── isotonic_calibrator.pkl         # Isotonic probability calibrator
-│   ├── lightgbm_config.json
-│   └── feature_schema.pkl
-├── notebooks/                          # Production Jupyter research notebooks
-│   ├── Healthcare_Claim_Autoencoder_Fraud_Detection_FIXED.ipynb
-│   ├── Healthcare_Claim_ECOD_COPOD_Fraud_Detection.ipynb
-│   ├── Healthcare_Claim_HDBSCAN_GLOSH_Fraud_Detection.ipynb
-│   ├── Healthcare_Claim_IsolationForest_Fraud_Detection.ipynb
-│   └── Healthcare_Claim_LightGBM_Rejection_Prediction.ipynb
-├── reports/                            # Technical Model Reports (one DOCX per algorithm)
-│   ├── figures/                        # High-resolution latent space, ROC and calibration curves
-│   ├── Autoencoder_Report.docx         # Deep Autoencoder Anomaly Detection Report
-│   ├── ECOD_COPOD_Report.docx          # ECOD & COPOD Tail Probability Detection Report
-│   ├── HDBSCAN_GLOSH_Report.docx       # Provider-Level HDBSCAN & GLOSH Clustering Report
-│   ├── Isolation_Forest_Report.docx    # Isolation Forest Outlier Detection Report
-│   └── LightGBM_Report.docx            # Supervised LightGBM Rejection Prediction Report
-├── schemas/                            # Relational schema dictionaries & table stats
-│   ├── full_schema_details.json        # 316-column itemized data dictionary
-│   └── table_summary.json              # Row counts, column counts, and sizes
-├── scripts/                            # Evaluation execution scripts
-│   └── run_autoencoder_eval_viz.py     # Evaluation, UMAP/t-SNE & figure generator
-├── src/                                # Modular core Python package
-│   ├── __init__.py
-│   ├── dataset.py                      # Streaming & sampled dataset preprocessing
-│   ├── evaluate.py                     # ROC-AUC, PR-AUC & threshold optimization
-│   ├── model.py                        # PyTorch Autoencoder network architecture
-│   └── train.py                        # GPU-accelerated PyTorch training pipeline
-├── .gitignore                          # Strict ignore rules for large data & venvs
-├── requirements.txt                    # Project dependency specification
-└── README.md                           # Master project documentation
+.
+├── microservice/               # The deployable product: scoring API + reviewer UI
+│   ├── backend/                # Python: scoring service, training code, tests
+│   │   ├── service/            # FastAPI microservice
+│   │   │   ├── app.py          # Routes: /health, /api/v1/predict/*, /api/v1/schema
+│   │   │   ├── config.py       # Settings, model directory, decision thresholds
+│   │   │   ├── engine.py       # Model loading, calibrated scoring (singleton)
+│   │   │   ├── explainer.py    # TreeSHAP attribution and plain-language rationales
+│   │   │   ├── transformer.py  # Claim JSON -> 51-feature model vector
+│   │   │   ├── guardrails.py   # Input validation and range guards
+│   │   │   ├── schemas.py      # Pydantic request/response contracts
+│   │   │   └── client_example.py   # Integration example for openIMIS callers
+│   │   ├── src/                # Autoencoder training package (dataset/model/train/evaluate)
+│   │   ├── scripts/            # Evaluation and figure generation
+│   │   ├── tests/              # Service test suite (19 tests)
+│   │   ├── Dockerfile          # Service image (build from the repository root)
+│   │   └── requirements.txt    # Python dependencies
+│   └── frontend/               # Next.js 16 claim review interface
+│       ├── app/                # Page, layout, components, shared types
+│       ├── sample_claims/      # Three demo payloads (routine / suspicious / high-cost)
+│       └── next.config.ts      # /api/proxy -> http://127.0.0.1:8000 rewrite
+│
+├── models/                     # Trained artifacts, one directory per model family
+│   ├── model_lightgbm_no_leakage/   # Served by the microservice
+│   ├── model_lightgbm/              # Original run, retains ClaimCategory (leaky)
+│   ├── model_autoencoder/
+│   ├── model_iforest/
+│   └── model_ecod/
+│
+├── notebooks/                  # Research notebooks, one per model family
+├── reports/                    # DOCX technical reports (one per model family)
+├── figures/                    # Figures grouped by model family
+├── data/                       # Raw openIMIS CSV exports (gitignored)
+├── schemas/                    # 316-column data dictionary and table statistics
+├── docker-compose.yml          # Runs the scoring service
+└── README.md
 ```
+
+Paths resolve relative to the repository root: the service, the notebooks, and the evaluation
+scripts all locate `data/` and `models/` by walking up from their own location, so they run from
+either the repository root or their own directory without edits.
 
 ---
 
-## 🤖 Models & Methodologies
+## Quick start
 
-| Model Family | Paradigm | Primary Objective | Key Metric | Artifact Directory |
-| :--- | :--- | :--- | :--- | :--- |
-| **Deep Autoencoder** | Unsupervised Deep Learning (PyTorch) | Learns normal claims manifold; reconstruction MSE flags abnormal billing & unbundling | PR-AUC / ROC-AUC, MSE Error | [`model/`](model/) |
-| **LightGBM** | Supervised GBDT | Predicts claim rejection probability before submission; probability calibration | ROC-AUC, Brier Score | [`model_lightgbm/`](model_lightgbm/) |
-| **Isolation Forest** | Unsupervised Ensemble | Isolates multi-attribute billing anomalies via random partitioning trees | Anomaly Score, Precision@K | [`model_iforest/`](model_iforest/) |
-| **ECOD / COPOD** | Non-parametric Statistical | Tail probability outlier detection via empirical cumulative distributions | CDF Outlier Score | [`model_ecod/`](model_ecod/) |
-| **HDBSCAN / GLOSH** | Density-based Clustering | Identifies spatial-billing noise clusters and localized fraud schemes | GLOSH Outlier Score | [`notebooks/`](notebooks/) |
+### 1. Backend — scoring service
 
----
-
-## 🚀 Getting Started
-
-### 1. Prerequisites
-- Python 3.10 or higher
-- NVIDIA CUDA-capable GPU recommended for deep autoencoder training (e.g., RTX 2060+, RTX 3080, V100, A100)
-
-### 2. Clone the Repository
 ```bash
-git clone https://github.com/Data-and-Design-Lab/Cameroon-2.0.git
-cd Cameroon-2.0
-```
-
-### 3. Create & Activate Virtual Environment
-```bash
-# On Linux / macOS
-python3 -m venv .venv
+python -m venv .venv
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+# Linux / macOS
 source .venv/bin/activate
 
-# On Windows (PowerShell)
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-### 4. Install Dependencies
-```bash
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r microservice/backend/requirements.txt
+pip install fastapi uvicorn pydantic-settings httpx    # serving extras
+
+cd microservice/backend
+uvicorn service.app:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-### 5. Setup Data Files
-Place the raw openIMIS CSV export files into the [`data/`](data/) directory. See [`data/README.md`](data/README.md) for table schemas and expected filenames (`TblClaim.csv`, `TblClaimServices.csv`, `TblHF.csv`, etc.).
+The service loads `models/model_lightgbm_no_leakage/` at startup. Interactive API docs:
+<http://127.0.0.1:8000/docs>.
 
----
+### 2. Frontend — reviewer interface
 
-## 📊 Running Pipelines & Reports
-
-### Training the Autoencoder via Python Module
-```python
-from src.dataset import load_and_preprocess_claim_data
-from src.train import train_autoencoder
-
-data = load_and_preprocess_claim_data(data_dir="data", sample_size=500000)
-model, history = train_autoencoder(
-    X_train=data['X_train'],
-    X_val=data['X_val'],
-    latent_dim=8,
-    epochs=25,
-    save_path="model/autoencoder_best.pth"
-)
-```
-
-### Running Model Evaluation & Latent Space Projections
 ```bash
-python scripts/run_autoencoder_eval_viz.py
+cd microservice/frontend
+npm install
+npm run dev
 ```
-*Generates high-dimensional PCA, t-SNE, and UMAP latent space projections into `reports/figures/`.*
 
-### Model Technical Reports (Word DOCX)
-Comprehensive evaluation reports for each machine learning algorithm are located in [`reports/`](reports/):
-- **`Autoencoder_Report.docx`**: Deep neural reconstruction anomaly detection, architecture sweep, Precision@K audit queues.
-- **`LightGBM_Report.docx`**: Supervised gradient boosted trees across 13 tables, focal loss calibration, and TreeSHAP importance.
-- **`Isolation_Forest_Report.docx`**: Ensemble tree-partitioning outlier isolation, path length distributions, and screening efficiency.
-- **`ECOD_COPOD_Report.docx`**: Non-parametric empirical CDF tail probability anomaly detection and cold-start screening.
-- **`HDBSCAN_GLOSH_Report.docx`**: Facility-month clustering, GLOSH local density outlier scoring, and triage tiers.
+Open <http://localhost:3000>. The page calls the service directly at `127.0.0.1:8000` and falls
+back to the `/api/proxy` rewrite, so it works whether or not the ports are proxied. The header shows
+live service health, test ROC-AUC, and the alert cutoff in use.
+
+### 3. Docker
+
+```bash
+docker compose up --build
+```
+
+The image is built from the repository root (it needs `microservice/backend/service/` and
+`models/model_lightgbm_no_leakage/`), exposes port 8000, and healthchecks `/health`.
+
+### 4. Tests
+
+```bash
+cd microservice/backend
+python tests/test_service.py
+```
 
 ---
 
-## 📜 Schema & Data Dictionary
+## API
 
-The repository includes a comprehensive 316-column relational data catalog:
-- [`schemas/full_schema_details.json`](schemas/full_schema_details.json): Column types, missingness ratios, and sample values across all 13 openIMIS tables.
-- [`schemas/table_summary.json`](schemas/table_summary.json): Table-level row counts and schema dimensions.
+| Method | Endpoint | Purpose |
+| :--- | :--- | :--- |
+| `GET` | `/` | Service metadata, endpoint index, headline model metrics |
+| `GET` | `/health` | Liveness, model load state, ROC-AUC / PR-AUC, active threshold |
+| `GET` | `/api/v1/schema` | The 51 model features with types and categorical levels |
+| `POST` | `/api/v1/predict/claim` | Score one claim from openIMIS-shaped JSON |
+| `POST` | `/api/v1/predict/features` | Score one pre-computed 51-feature vector |
+| `POST` | `/api/v1/predict/batch` | Score a batch of claims in one request |
+
+Example:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/predict/claim \
+  -H "Content-Type: application/json" \
+  -d @microservice/frontend/sample_claims/legitimate_claim.json
+```
+
+The response carries the calibrated risk percentage, the risk tier
+(`LOW_RISK` / `MODERATE_RISK` / `HIGH_RISK` / `CRITICAL`), a recommended adjudication action, the
+decision threshold it was compared against, TreeSHAP risk drivers and mitigating factors, and the
+scoring latency.
+
+Configuration is environment-driven with the `FRAUD_API_` prefix — for example
+`FRAUD_API_MODEL_DIR` to serve a different artifact directory, or `FRAUD_API_DECISION_THRESHOLD`
+to move the alert cutoff.
 
 ---
 
-## 🏛️ Organization & License
+## Models
 
-This project is developed and maintained by the **Data and Design Lab**.
-Released under the [MIT License](LICENSE) (or organizational license where applicable).
+Test-set metrics as recorded in each model card. Confidence intervals are clustered by facility;
+the unsupervised detectors are evaluated against the same rejection label.
+
+| Model | Paradigm | ROC-AUC | PR-AUC (no-skill) | Operating point | Artifacts |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **LightGBM, leakage-free** | Supervised GBDT + isotonic calibration | **0.8778** | 0.7604 (0.1623) | precision 0.918, recall 0.540, alert rate 9.6% | [`models/model_lightgbm_no_leakage/`](models/model_lightgbm_no_leakage/) |
+| LightGBM, original run | Supervised GBDT | 0.9841 | 0.9635 (0.1623) | precision 0.999, recall 0.650 | [`models/model_lightgbm/`](models/model_lightgbm/) |
+| Deep autoencoder | Unsupervised (PyTorch) | 0.7408 | 0.5074 (0.1750) | precision 0.944, recall 0.095 | [`models/model_autoencoder/`](models/model_autoencoder/) |
+| ECOD | Non-parametric tail probability | 0.7426 | 0.5238 (0.1750) | precision 0.904, recall 0.181 | [`models/model_ecod/`](models/model_ecod/) |
+| Isolation Forest | Unsupervised ensemble | 0.7235 | 0.4417 (0.1750) | precision 0.574, recall 0.148 | [`models/model_iforest/`](models/model_iforest/) |
+| HDBSCAN / GLOSH | Density clustering (facility-month) | — | — | outlier ranking, not claim-level | notebook only |
+
+**Why the leakage-free model is the one served.** The original LightGBM run reaches 0.9841 ROC-AUC
+largely because `ClaimCategory` is set during adjudication — it encodes the answer. Putting that
+field and 35 other adjudication-time fields on a deny-list and retraining across 11 tables gives an
+honest 0.8778 ROC-AUC on 51 features, and that is the model behind the service. The ablation report
+quantifies what each data block contributes.
+
+Each artifact directory contains a `MODEL_CARD.md` with data splits, leakage controls, seed
+variance, known limitations, and intended use.
+
+---
+
+## Reports and figures
+
+Every report embeds its own figures; `figures/` keeps the source PNGs, grouped by model family.
+
+| Report | Figures | Notebook |
+| :--- | :--- | :--- |
+| [`LightGBM_Without_ClaimCategory_Report.docx`](reports/LightGBM_Without_ClaimCategory_Report.docx) | [`figures/lightgbm_no_leakage/`](figures/lightgbm_no_leakage/) — ablation barchart, calibration, SHAP | `Healthcare_Claim_LightGBM_Ablation_Without_ClaimCategory.ipynb` |
+| [`Isolation_Forest_Report.docx`](reports/Isolation_Forest_Report.docx) | [`figures/isolation_forest/`](figures/isolation_forest/) — evaluation curves, SHAP beeswarm / global bar / waterfall | `Healthcare_Claim_IsolationForest_Fraud_Detection.ipynb` |
+| [`Autoencoder_Report.docx`](reports/Autoencoder_Report.docx) | [`figures/autoencoder/`](figures/autoencoder/) — evaluation curves, training diagnostics, reconstruction distributions, latent space | `Healthcare_Claim_Autoencoder_Fraud_Detection_FIXED.ipynb` |
+| [`ECOD_COPOD_Report.docx`](reports/ECOD_COPOD_Report.docx) | [`figures/ecod_copod/`](figures/ecod_copod/) — evaluation curves | `Healthcare_Claim_ECOD_COPOD_Fraud_Detection.ipynb` |
+| [`HDBSCAN_GLOSH_Report.docx`](reports/HDBSCAN_GLOSH_Report.docx) | [`figures/hdbscan_glosh/`](figures/hdbscan_glosh/) — UMAP clusters and GLOSH heatmap | `Healthcare_Claim_HDBSCAN_GLOSH_Fraud_Detection.ipynb` |
+| [`Microservice_Architecture_and_Model_Report.docx`](reports/Microservice_Architecture_and_Model_Report.docx) | text only | — |
+
+[`figures/lightgbm/`](figures/lightgbm/) holds the calibration and SHAP plots for the original
+(leaky) LightGBM run, kept as evidence for the leakage comparison; no current report embeds them.
+
+---
+
+## Data and schema
+
+Raw openIMIS exports are **not** tracked — the dataset is roughly 6.6 GB. Place the CSV tables in
+[`data/`](data/); [`data/README.md`](data/README.md) lists the expected filenames and record counts
+(`TblClaim.csv`, `TblClaimServices.csv`, `TblHF.csv`, `TblICDCodes.csv`, and the rest).
+
+The relational catalog is checked in:
+
+- [`schemas/full_schema_details.json`](schemas/full_schema_details.json) — 316 columns with types,
+  missingness, and sample values across 13 tables.
+- [`schemas/table_summary.json`](schemas/table_summary.json) — row counts and schema dimensions.
+
+---
+
+## Reproducing the research
+
+```bash
+jupyter lab            # notebooks/ resolves data/ and models/ automatically
+```
+
+Notebooks write their artifacts to `models/<model_family>/` and read from `data/`. Autoencoder
+evaluation figures are regenerated with:
+
+```bash
+python microservice/backend/scripts/run_autoencoder_eval_viz.py
+```
+
+which writes into `figures/autoencoder/`.
+
+---
+
+## License
+
+Released under the [MIT License](LICENSE). Developed and maintained by the **Data and Design Lab**.

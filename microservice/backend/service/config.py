@@ -1,8 +1,18 @@
 from pathlib import Path
 from pydantic_settings import BaseSettings
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-DEFAULT_MODEL_DIR = BASE_DIR / "model_lightgbm_no_leakage"
+BACKEND_DIR = Path(__file__).resolve().parent.parent
+
+# Model artifacts live in the repository-level `models/` directory
+# (microservice/backend/service -> ... -> repository root). In the Docker image
+# `models/` sits directly beside `service/`, so the search starts at the backend
+# directory and walks up until a `models/` directory turns up.
+_SEARCH_ROOTS = (BACKEND_DIR, *BACKEND_DIR.parents)
+REPO_ROOT = next(
+    (path for path in _SEARCH_ROOTS if (path / "models").is_dir()),
+    BACKEND_DIR.parent.parent,
+)
+DEFAULT_MODEL_DIR = REPO_ROOT / "models" / "model_lightgbm_no_leakage"
 
 class Settings(BaseSettings):
     app_title: str = "openIMIS Claim Fraud & Rejection Prediction Service"

@@ -1,11 +1,15 @@
 # ------------------------------------------------------------------------------
 # Cameroon openIMIS Claim Fraud & Rejection Prediction Microservice
+#
+# Build from the repository root, because the image needs both the service code
+# (microservice/backend/service) and the trained artifacts (models/):
+#   docker build -f microservice/backend/Dockerfile -t openimis-claim-fraud-service .
 # ------------------------------------------------------------------------------
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    FRAUD_API_MODEL_DIR=/app/model_lightgbm_no_leakage
+    FRAUD_API_MODEL_DIR=/app/models/model_lightgbm_no_leakage
 
 WORKDIR /app
 
@@ -17,14 +21,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python requirements
-COPY requirements.txt .
+COPY microservice/backend/requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir fastapi uvicorn pydantic-settings httpx
 
-# Copy source code and model artifacts
-COPY service/ ./service/
-COPY model_lightgbm_no_leakage/ ./model_lightgbm_no_leakage/
+# Copy service code and the serving model artifacts
+COPY microservice/backend/service/ ./service/
+COPY models/model_lightgbm_no_leakage/ ./models/model_lightgbm_no_leakage/
 
 EXPOSE 8000
 

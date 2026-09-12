@@ -14,7 +14,7 @@ def train_autoencoder(
     batch_size: int = 1024,
     learning_rate: float = 0.001,
     patience: int = 7,
-    save_path: str = os.path.join("model", "autoencoder_best.pth")
+    save_path: str = os.path.join("models", "model_autoencoder", "autoencoder_best.pth")
 ):
     """
     Trains the PyTorch Autoencoder using GPU (NVIDIA GeForce RTX 2060).

@@ -88,10 +88,15 @@ data/*.7z
 *.bak
 scratch_*.txt
 
-# Report generator scripts and extra markdown documents
+# Report generator scripts and scratch markdown documents
 generate_*.py
 reports/generate_*.py
 reports/*.md
 build_*_notebook.py
-scripts/build_*_notebook.py
+microservice/backend/scripts/build_*_notebook.py
+
+# Node / Next.js frontend (see frontend/.gitignore for the full set)
+node_modules/
+.next/
+*.tsbuildinfo
 
